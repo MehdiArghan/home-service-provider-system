@@ -1,5 +1,4 @@
-package com.example.homeserviceprovidersystem.entity;
-
+package com.example.homeserviceprovidersystem.entity.person;
 import com.example.homeserviceprovidersystem.base.BaseEntity;
 import jakarta.persistence.MappedSuperclass;
 import lombok.*;
