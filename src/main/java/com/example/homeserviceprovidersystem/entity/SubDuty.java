@@ -15,6 +15,8 @@ import lombok.experimental.FieldDefaults;
 @Entity
 public class SubDuty extends BaseEntity<Long> {
     String name;
+    double price;
+    String description;
     @ManyToOne
     Duty duty;
 }
