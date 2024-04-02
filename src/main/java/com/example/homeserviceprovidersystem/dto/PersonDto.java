@@ -2,7 +2,6 @@ package com.example.homeserviceprovidersystem.dto;
 
 import com.example.homeserviceprovidersystem.base.BaseEntity;
 import jakarta.persistence.Column;
-import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -15,7 +14,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @ToString
-@MappedSuperclass
 public class PersonDto extends BaseEntity<Long> {
     @NotNull(message = "firstName cannot be null")
     @NotEmpty(message = "firstName cannot be empty")

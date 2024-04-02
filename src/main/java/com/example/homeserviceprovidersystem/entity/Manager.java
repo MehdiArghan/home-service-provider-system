@@ -1,4 +1,4 @@
-package com.example.homeserviceprovidersystem.entity.person;
+package com.example.homeserviceprovidersystem.entity;
 
 import jakarta.persistence.Entity;
 import lombok.*;

@@ -1,6 +1,6 @@
-package com.example.homeserviceprovidersystem.entity.person;
+package com.example.homeserviceprovidersystem.entity;
 
-import com.example.homeserviceprovidersystem.entity.person.enums.ExpertStatus;
+import com.example.homeserviceprovidersystem.entity.enums.ExpertStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
