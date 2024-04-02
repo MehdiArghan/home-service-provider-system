@@ -2,6 +2,7 @@ package com.example.homeserviceprovidersystem.entity;
 
 import com.example.homeserviceprovidersystem.base.BaseEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -12,6 +13,8 @@ import lombok.experimental.FieldDefaults;
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-public class Duty extends BaseEntity<Long> {
+public class SubDuty extends BaseEntity<Long> {
     String name;
+    @ManyToOne
+    Duty duty;
 }
