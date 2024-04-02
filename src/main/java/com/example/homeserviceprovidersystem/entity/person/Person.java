@@ -1,10 +1,12 @@
 package com.example.homeserviceprovidersystem.entity.person;
+
 import com.example.homeserviceprovidersystem.base.BaseEntity;
 import jakarta.persistence.MappedSuperclass;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+
 @Setter
 @Getter
 @AllArgsConstructor

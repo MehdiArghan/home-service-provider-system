@@ -20,4 +20,5 @@ public class Expert extends Person {
     ExpertStatus expertStatus;
     @Lob
     byte[] picture;
+    int score;
 }
