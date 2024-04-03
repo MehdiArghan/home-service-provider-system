@@ -1,5 +1,6 @@
 package com.example.homeserviceprovidersystem.service.impl;
 
+import com.example.homeserviceprovidersystem.customeException.CustomRuntimeException;
 import com.example.homeserviceprovidersystem.entity.Duty;
 import com.example.homeserviceprovidersystem.repositroy.DutyRepository;
 import com.example.homeserviceprovidersystem.service.DutyService;
@@ -21,7 +22,7 @@ public class DutyServiceImpl implements DutyService {
     public Duty save(Duty duty) {
         Optional<Duty> foundDuty = dutyRepository.findByName(duty.getName());
         if (foundDuty.isPresent()) {
-            throw new RuntimeException();
+            throw new CustomRuntimeException("Duty with name '" + duty.getName() + "' not found");
         }
         return dutyRepository.save(duty);
     }
