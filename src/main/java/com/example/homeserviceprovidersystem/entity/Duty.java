@@ -1,6 +1,7 @@
 package com.example.homeserviceprovidersystem.entity;
 
 import com.example.homeserviceprovidersystem.base.BaseEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.*;
@@ -17,6 +18,6 @@ import java.util.Set;
 @Entity
 public class Duty extends BaseEntity<Long> {
     String name;
-    @OneToMany(mappedBy = "duty")
+    @OneToMany(mappedBy = "duty", cascade = CascadeType.REMOVE)
     Set<SubDuty> subDuties;
 }
