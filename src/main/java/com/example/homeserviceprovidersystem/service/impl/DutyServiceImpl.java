@@ -22,7 +22,7 @@ public class DutyServiceImpl implements DutyService {
     public Duty save(Duty duty) {
         Optional<Duty> foundDuty = dutyRepository.findByName(duty.getName());
         if (foundDuty.isPresent()) {
-            throw new CustomRuntimeException("Duty with name '" + duty.getName() + "' not found");
+            throw new CustomRuntimeException("Duty with name '" + duty.getName() + "'available");
         }
         return dutyRepository.save(duty);
     }
