@@ -4,6 +4,7 @@ import com.example.homeserviceprovidersystem.dto.DutyDto;
 import com.example.homeserviceprovidersystem.dto.DutyDtoWithName;
 import com.example.homeserviceprovidersystem.dto.mapper.DutyMapper;
 import com.example.homeserviceprovidersystem.entity.Duty;
+import com.example.homeserviceprovidersystem.entity.SubDuty;
 import com.example.homeserviceprovidersystem.service.DutyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
