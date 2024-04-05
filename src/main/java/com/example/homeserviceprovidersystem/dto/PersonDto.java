@@ -14,6 +14,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @ToString
+@Builder
 public class PersonDto extends BaseEntity<Long> {
     @NotNull(message = "firstName cannot be null")
     @NotEmpty(message = "firstName cannot be empty")

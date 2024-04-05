@@ -10,6 +10,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Builder
 public class SubDutyDto extends BaseEntity<Long> {
     String name;
     double price;

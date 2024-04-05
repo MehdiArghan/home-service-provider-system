@@ -10,5 +10,6 @@ import lombok.experimental.FieldDefaults;
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
+@Builder
 public class Admin extends Person {
 }

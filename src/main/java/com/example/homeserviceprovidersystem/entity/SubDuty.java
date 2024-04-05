@@ -12,6 +12,7 @@ import lombok.experimental.FieldDefaults;
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
+@Builder
 public class SubDuty extends BaseEntity<Long> {
     String name;
     double price;

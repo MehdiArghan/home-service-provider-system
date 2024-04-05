@@ -8,5 +8,6 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @ToString
+@Builder
 public class ManagerDto extends PersonDto {
 }
