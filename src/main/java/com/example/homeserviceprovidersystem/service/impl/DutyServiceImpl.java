@@ -21,9 +21,10 @@ public class DutyServiceImpl implements DutyService {
     @Override
     public Duty save(Duty duty) {
         Optional<Duty> foundDuty = dutyRepository.findByName(duty.getName());
-        if (foundDuty.isPresent()) {
+        if (foundDuty.isEmpty()) {
+            return dutyRepository.save(duty);
+        } else {
             throw new CustomRuntimeException("Duty with name '" + duty.getName() + "'available");
         }
-        return dutyRepository.save(duty);
     }
 }

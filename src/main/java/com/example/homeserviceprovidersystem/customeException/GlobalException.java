@@ -21,7 +21,7 @@ import java.util.Map;
 public class GlobalException extends ResponseEntityExceptionHandler {
     @ExceptionHandler(CustomRuntimeException.class)
     public ResponseEntity<String> handleCustomRuntimeException(CustomRuntimeException customRuntimeException) {
-        return new ResponseEntity<>(customRuntimeException.getMessage(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(customRuntimeException.getMessage(), HttpStatus.FOUND);
     }
 
     @Override
