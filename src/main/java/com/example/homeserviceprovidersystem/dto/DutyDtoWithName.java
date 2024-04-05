@@ -11,6 +11,6 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @ToString
 @Builder
-public class DutyMapperWithName extends BaseEntity<Long> {
+public class DutyDtoWithName extends BaseEntity<Long> {
     String name;
 }
