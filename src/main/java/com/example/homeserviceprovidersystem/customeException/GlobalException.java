@@ -37,5 +37,4 @@ public class GlobalException extends ResponseEntityExceptionHandler {
         body.put("status", HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
-
 }
