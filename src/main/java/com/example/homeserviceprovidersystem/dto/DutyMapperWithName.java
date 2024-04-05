@@ -1,11 +1,8 @@
 package com.example.homeserviceprovidersystem.dto;
 
 import com.example.homeserviceprovidersystem.base.BaseEntity;
-import com.example.homeserviceprovidersystem.entity.SubDuty;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.util.Set;
 
 @Setter
 @Getter
@@ -14,7 +11,6 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @ToString
 @Builder
-public class DutyDto extends BaseEntity<Long> {
+public class DutyMapperWithName extends BaseEntity<Long> {
     String name;
-    Set<SubDuty> subDuties;
 }

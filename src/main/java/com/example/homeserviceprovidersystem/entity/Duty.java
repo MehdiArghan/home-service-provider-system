@@ -16,6 +16,7 @@ import java.util.Set;
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
+@Builder
 public class Duty extends BaseEntity<Long> {
     String name;
     @OneToMany
