@@ -11,7 +11,6 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @ToString
-@Builder
 public class ExpertDto extends PersonDto {
     @Size(max = 300 * 1024, message = "Picture size must be less than or equal to 300 KB")
     @Lob

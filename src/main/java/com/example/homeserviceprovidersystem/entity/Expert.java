@@ -15,7 +15,6 @@ import lombok.experimental.FieldDefaults;
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-@Builder
 public class Expert extends Person {
     @Enumerated(EnumType.STRING)
     ExpertStatus expertStatus;
