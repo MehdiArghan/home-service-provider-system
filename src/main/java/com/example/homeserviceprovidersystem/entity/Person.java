@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Setter
 @Getter
@@ -20,5 +21,6 @@ public class Person extends BaseEntity<Long> {
     String lastName;
     String email;
     String password;
-    LocalDate registrationTime;
+    LocalDate registrationDate;
+    LocalTime registrationTime;
 }
