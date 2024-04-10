@@ -1,11 +1,9 @@
 package com.example.homeserviceprovidersystem.entity;
 
 import com.example.homeserviceprovidersystem.base.BaseEntity;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Entity;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.time.LocalDate;
 
 @Setter
 @Getter
@@ -13,12 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@MappedSuperclass
-@Builder
-public class Person extends BaseEntity<Long> {
-    String firstName;
-    String lastName;
-    String email;
-    String password;
-    LocalDate registrationTime;
+@Entity
+public class Wallet extends BaseEntity<Long> {
+    double price;
 }

@@ -1,6 +1,7 @@
 package com.example.homeserviceprovidersystem.dto;
 
 import com.example.homeserviceprovidersystem.base.BaseEntity;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -12,5 +13,6 @@ import lombok.experimental.FieldDefaults;
 @ToString
 @Builder
 public class DutyDtoWithName extends BaseEntity<Long> {
+    @NotBlank
     String name;
 }

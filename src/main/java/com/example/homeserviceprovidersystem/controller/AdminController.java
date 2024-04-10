@@ -10,14 +10,10 @@ import com.example.homeserviceprovidersystem.entity.SubDuty;
 import com.example.homeserviceprovidersystem.service.DutyService;
 import com.example.homeserviceprovidersystem.service.SubDutyService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -37,7 +33,7 @@ public class AdminController {
 
     @PostMapping(value = "/addSubDuty")
     public ResponseEntity<SubDutyDto> save(@Valid @RequestBody SubDutyDto subDutyDto,
-                                           @NotBlank String nameDuty) {
+                                           @RequestParam String nameDuty) {
         SubDuty subDuty = subDutyMapper.getSubDutyDtoToSubDuty(subDutyDto);
         SubDuty savedSubDuty = subDutyService.save(subDuty, nameDuty);
         return new ResponseEntity<>(subDutyMapper.getSubDutyToSubDutyDto(savedSubDuty), HttpStatus.CREATED);
