@@ -1,6 +1,7 @@
 package com.example.homeserviceprovidersystem.entity;
 
 import com.example.homeserviceprovidersystem.base.BaseEntity;
+import com.example.homeserviceprovidersystem.entity.enums.OrderStatus;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
