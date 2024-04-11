@@ -1,8 +1,8 @@
 package com.example.homeserviceprovidersystem.entity;
 
 import com.example.homeserviceprovidersystem.base.BaseEntity;
-import com.example.homeserviceprovidersystem.entity.enums.OrderStatus;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -11,24 +11,20 @@ import java.time.LocalTime;
 
 @Setter
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-public class Orders extends BaseEntity<Long> {
+public class ExpertSuggestions extends BaseEntity<Long> {
     double ProposedPrice;
-    String jobDescription;
-    LocalDate dateOfWork;
-    LocalTime TimeOfWord;
-    @Embedded
-    Address address;
-    @Enumerated(EnumType.STRING)
-    OrderStatus orderStatus;
+    LocalDate offerDate;
+    LocalTime offerTime;
+    LocalTime TimeOfStartWork;
+    LocalDate DateOfStartWork;
+    Integer durationOfWorkPerHour;
     @ManyToOne
-    Customer customer;
+    Orders orders;
     @ManyToOne
     Expert expert;
-    @ManyToOne
-    SubDuty subDuty;
 }
