@@ -1,4 +1,4 @@
-package com.example.homeserviceprovidersystem.dto.mapper;
+package com.example.homeserviceprovidersystem.mapper;
 
 import com.example.homeserviceprovidersystem.dto.SubDutyDto;
 import com.example.homeserviceprovidersystem.entity.SubDuty;

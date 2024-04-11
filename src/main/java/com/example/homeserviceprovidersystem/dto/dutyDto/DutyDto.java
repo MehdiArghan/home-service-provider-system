@@ -1,4 +1,4 @@
-package com.example.homeserviceprovidersystem.dto;
+package com.example.homeserviceprovidersystem.dto.dutyDto;
 
 import com.example.homeserviceprovidersystem.base.BaseEntity;
 import jakarta.validation.constraints.NotBlank;
@@ -11,8 +11,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @ToString
-@Builder
-public class DutyDtoWithName extends BaseEntity<Long> {
-    @NotBlank
+public class DutyDto extends BaseEntity<Long> {
+    @NotBlank(message = "please enter the appropriate name")
     String name;
 }

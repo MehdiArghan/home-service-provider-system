@@ -19,11 +19,6 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalException extends ResponseEntityExceptionHandler {
-    @ExceptionHandler(CustomRuntimeException.class)
-    public ResponseEntity<String> handleCustomRuntimeException(CustomRuntimeException customRuntimeException) {
-        return new ResponseEntity<>(customRuntimeException.getMessage(), HttpStatus.FOUND);
-    }
-
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             @NonNull MethodArgumentNotValidException ex,
@@ -36,5 +31,15 @@ public class GlobalException extends ResponseEntityExceptionHandler {
         body.put("messages", errorList);
         body.put("status", HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(CustomRuntimeException.class)
+    public ResponseEntity<String> handleCustomRuntimeException(CustomRuntimeException customRuntimeException) {
+        return new ResponseEntity<>(customRuntimeException.getMessage(), HttpStatus.FOUND);
+    }
+
+    @ExceptionHandler(CustomResourceNotFoundException.class)
+    public ResponseEntity<String> CustomResourceNotFoundException(CustomResourceNotFoundException customResourceNotFoundException) {
+        return new ResponseEntity<>(customResourceNotFoundException.getMessage(), HttpStatus.NOT_FOUND);
     }
 }
