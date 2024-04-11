@@ -12,7 +12,6 @@ import lombok.experimental.FieldDefaults;
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-@Builder
 public class Duty extends BaseEntity<Long> {
     String name;
 }

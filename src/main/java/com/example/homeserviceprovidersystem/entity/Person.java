@@ -15,7 +15,6 @@ import java.time.LocalTime;
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @MappedSuperclass
-@Builder
 public class Person extends BaseEntity<Long> {
     String firstName;
     String lastName;
