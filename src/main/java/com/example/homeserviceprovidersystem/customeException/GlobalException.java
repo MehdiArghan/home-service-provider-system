@@ -39,7 +39,12 @@ public class GlobalException extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(CustomResourceNotFoundException.class)
-    public ResponseEntity<String> CustomResourceNotFoundException(CustomResourceNotFoundException customResourceNotFoundException) {
+    public ResponseEntity<String> handleCustomResourceNotFoundException(CustomResourceNotFoundException customResourceNotFoundException) {
         return new ResponseEntity<>(customResourceNotFoundException.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(CustomEntityNotFoundException.class)
+    public ResponseEntity<String> handleCustomEntityNotFoundException(CustomEntityNotFoundException customEntityNotFoundException) {
+        return new ResponseEntity<>(customEntityNotFoundException.getMessage(), HttpStatus.NOT_FOUND);
     }
 }

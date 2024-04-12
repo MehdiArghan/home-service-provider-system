@@ -1,42 +1,48 @@
 package com.example.homeserviceprovidersystem.service.impl;
 
+import com.example.homeserviceprovidersystem.customeException.CustomResourceNotFoundException;
+import com.example.homeserviceprovidersystem.customeException.CustomRuntimeException;
 import com.example.homeserviceprovidersystem.entity.Duty;
 import com.example.homeserviceprovidersystem.entity.SubDuty;
-import com.example.homeserviceprovidersystem.repositroy.DutyRepository;
 import com.example.homeserviceprovidersystem.repositroy.SubDutyRepository;
+import com.example.homeserviceprovidersystem.service.DutyService;
 import com.example.homeserviceprovidersystem.service.SubDutyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class SubDutyServiceImpl implements SubDutyService {
     protected SubDutyRepository subDutyRepository;
-    protected DutyRepository dutyRepository;
+    protected DutyService dutyService;
 
     @Autowired
-    public SubDutyServiceImpl(SubDutyRepository subDutyRepository, DutyRepository dutyRepository) {
+    public SubDutyServiceImpl(SubDutyRepository subDutyRepository, DutyService dutyService) {
         this.subDutyRepository = subDutyRepository;
-        this.dutyRepository = dutyRepository;
+        this.dutyService = dutyService;
     }
 
     @Override
     public SubDuty save(SubDuty subDuty, String nameDuty) {
         Optional<SubDuty> foundSubDuty = subDutyRepository.findByName(subDuty.getName());
-        Optional<Duty> foundDuty = dutyRepository.findByName(nameDuty);
-        if (foundSubDuty.isEmpty() && foundDuty.isPresent()) {
-            SubDuty savedSubDuty = subDutyRepository.save(subDuty);
-            Duty dutyAvailable = foundDuty.get();
-            Set<SubDuty> subDuties = new HashSet<>();
-            subDuties.add(savedSubDuty);
-            dutyAvailable.setSubDuties(subDuties);
-            dutyRepository.save(dutyAvailable);
-            return savedSubDuty;
+        Duty duty = dutyService.findByName(nameDuty);
+        if (foundSubDuty.isEmpty()) {
+            subDuty.setDuty(duty);
+            return subDutyRepository.save(subDuty);
         } else {
-            throw new RuntimeException();
+            throw new CustomRuntimeException("the subDuty is available");
+        }
+    }
+
+    @Override
+    public List<SubDuty> findAll() {
+        List<SubDuty> subDutyList = subDutyRepository.findAll();
+        if (subDutyList.isEmpty()) {
+            throw new CustomResourceNotFoundException("There is no result");
+        } else {
+            return subDutyList;
         }
     }
 }

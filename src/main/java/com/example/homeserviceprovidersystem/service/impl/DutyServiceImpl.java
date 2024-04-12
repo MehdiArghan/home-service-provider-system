@@ -1,10 +1,12 @@
 package com.example.homeserviceprovidersystem.service.impl;
 
+import com.example.homeserviceprovidersystem.customeException.CustomEntityNotFoundException;
 import com.example.homeserviceprovidersystem.customeException.CustomResourceNotFoundException;
 import com.example.homeserviceprovidersystem.customeException.CustomRuntimeException;
 import com.example.homeserviceprovidersystem.entity.Duty;
 import com.example.homeserviceprovidersystem.repositroy.DutyRepository;
 import com.example.homeserviceprovidersystem.service.DutyService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,16 @@ public class DutyServiceImpl implements DutyService {
             return dutyRepository.save(duty);
         } else {
             throw new CustomRuntimeException("Duty with name '" + duty.getName() + "'available");
+        }
+    }
+
+    @Override
+    public Duty findByName(String nameDuty) {
+        Optional<Duty> findDuty = dutyRepository.findByName(nameDuty);
+        if (findDuty.isEmpty()) {
+            throw new CustomEntityNotFoundException("No duty found with the given name");
+        } else {
+            return findDuty.get();
         }
     }
 

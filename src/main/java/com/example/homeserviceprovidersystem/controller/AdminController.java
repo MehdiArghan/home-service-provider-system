@@ -1,7 +1,7 @@
 package com.example.homeserviceprovidersystem.controller;
 
-import com.example.homeserviceprovidersystem.dto.SubDutyDto;
 import com.example.homeserviceprovidersystem.dto.dutyDto.DutyDto;
+import com.example.homeserviceprovidersystem.dto.subDutyDto.SubDutyDto;
 import com.example.homeserviceprovidersystem.entity.Duty;
 import com.example.homeserviceprovidersystem.entity.SubDuty;
 import com.example.homeserviceprovidersystem.mapper.DutyMapper;
@@ -33,7 +33,7 @@ public class AdminController {
     }
 
     @GetMapping(value = "/findAllDuty")
-    public ResponseEntity<List<DutyDto>> findAll() {
+    public ResponseEntity<List<DutyDto>> findAllDuty() {
         List<Duty> dutyList = dutyService.findAll();
         List<DutyDto> dutyDtoList = dutyList.stream().map(dutyMapper::getDutytoDutyDto).toList();
         return new ResponseEntity<>(dutyDtoList, HttpStatus.FOUND);
@@ -45,5 +45,12 @@ public class AdminController {
         SubDuty subDuty = subDutyMapper.getSubDutyDtoToSubDuty(subDutyDto);
         SubDuty savedSubDuty = subDutyService.save(subDuty, nameDuty);
         return new ResponseEntity<>(subDutyMapper.getSubDutyToSubDutyDto(savedSubDuty), HttpStatus.CREATED);
+    }
+
+    @GetMapping(value = "/findAllSubDuty")
+    public ResponseEntity<List<SubDutyDto>> findAllSubDuty() {
+        List<SubDuty> subDutyList = subDutyService.findAll();
+        List<SubDutyDto> subDutyDtoList = subDutyList.stream().map(subDutyMapper::getSubDutyToSubDutyDto).toList();
+        return new ResponseEntity<>(subDutyDtoList, HttpStatus.FOUND);
     }
 }
