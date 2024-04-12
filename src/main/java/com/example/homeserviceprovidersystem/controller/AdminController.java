@@ -26,7 +26,7 @@ public class AdminController {
     final SubDutyMapper subDutyMapper;
 
     @PostMapping(value = "/addDuty")
-    public ResponseEntity<DutyDto> save(@Valid @RequestBody DutyDto dutyDto) {
+    public ResponseEntity<DutyDto> saveDuty(@Valid @RequestBody DutyDto dutyDto) {
         Duty duty = dutyMapper.getDutyDtoToDuty(dutyDto);
         Duty savedDuty = dutyService.save(duty);
         return new ResponseEntity<>(dutyMapper.getDutytoDutyDto(savedDuty), HttpStatus.CREATED);
@@ -40,8 +40,9 @@ public class AdminController {
     }
 
     @PostMapping(value = "/addSubDuty")
-    public ResponseEntity<SubDutyDto> save(@Valid @RequestBody SubDutyDto subDutyDto,
+    public ResponseEntity<SubDutyDto> saveSubDuty(@Valid @RequestBody SubDutyDto subDutyDto,
                                            @RequestParam String nameDuty) {
+        System.out.println(subDutyDto.getName()+subDutyDto.getDescription()+subDutyDto.getBasePrice());
         SubDuty subDuty = subDutyMapper.getSubDutyDtoToSubDuty(subDutyDto);
         SubDuty savedSubDuty = subDutyService.save(subDuty, nameDuty);
         return new ResponseEntity<>(subDutyMapper.getSubDutyToSubDutyDto(savedSubDuty), HttpStatus.CREATED);

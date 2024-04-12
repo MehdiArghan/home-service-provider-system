@@ -6,7 +6,6 @@ import com.example.homeserviceprovidersystem.customeException.CustomRuntimeExcep
 import com.example.homeserviceprovidersystem.entity.Duty;
 import com.example.homeserviceprovidersystem.repositroy.DutyRepository;
 import com.example.homeserviceprovidersystem.service.DutyService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
