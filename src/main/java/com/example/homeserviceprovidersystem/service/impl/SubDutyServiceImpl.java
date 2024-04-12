@@ -1,5 +1,6 @@
 package com.example.homeserviceprovidersystem.service.impl;
 
+import com.example.homeserviceprovidersystem.customeException.CustomEntityNotFoundException;
 import com.example.homeserviceprovidersystem.customeException.CustomResourceNotFoundException;
 import com.example.homeserviceprovidersystem.customeException.CustomRuntimeException;
 import com.example.homeserviceprovidersystem.entity.Duty;
@@ -43,6 +44,18 @@ public class SubDutyServiceImpl implements SubDutyService {
             throw new CustomResourceNotFoundException("There is no result");
         } else {
             return subDutyList;
+        }
+    }
+
+    @Override
+    public SubDuty update(SubDuty subDuty, Long id) {
+        Optional<SubDuty> foundSubDuty = subDutyRepository.findById(id);
+        if (foundSubDuty.isEmpty()) {
+            throw new CustomEntityNotFoundException("no subDuty was found with this id");
+        } else {
+            SubDuty existSubDuty = foundSubDuty.get();
+            existSubDuty.setDescription(subDuty.getDescription());
+           return subDutyRepository.save(existSubDuty);
         }
     }
 }

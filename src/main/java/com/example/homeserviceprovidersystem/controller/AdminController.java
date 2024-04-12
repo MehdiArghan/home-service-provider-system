@@ -2,6 +2,7 @@ package com.example.homeserviceprovidersystem.controller;
 
 import com.example.homeserviceprovidersystem.dto.dutyDto.DutyDto;
 import com.example.homeserviceprovidersystem.dto.subDutyDto.SubDutyDto;
+import com.example.homeserviceprovidersystem.dto.subDutyDto.SubDutyDtoWithDescription;
 import com.example.homeserviceprovidersystem.entity.Duty;
 import com.example.homeserviceprovidersystem.entity.SubDuty;
 import com.example.homeserviceprovidersystem.mapper.DutyMapper;
@@ -41,8 +42,8 @@ public class AdminController {
 
     @PostMapping(value = "/addSubDuty")
     public ResponseEntity<SubDutyDto> saveSubDuty(@Valid @RequestBody SubDutyDto subDutyDto,
-                                           @RequestParam String nameDuty) {
-        System.out.println(subDutyDto.getName()+subDutyDto.getDescription()+subDutyDto.getBasePrice());
+                                                  @RequestParam String nameDuty) {
+        System.out.println(subDutyDto.getName() + subDutyDto.getDescription() + subDutyDto.getBasePrice());
         SubDuty subDuty = subDutyMapper.getSubDutyDtoToSubDuty(subDutyDto);
         SubDuty savedSubDuty = subDutyService.save(subDuty, nameDuty);
         return new ResponseEntity<>(subDutyMapper.getSubDutyToSubDutyDto(savedSubDuty), HttpStatus.CREATED);
@@ -53,5 +54,13 @@ public class AdminController {
         List<SubDuty> subDutyList = subDutyService.findAll();
         List<SubDutyDto> subDutyDtoList = subDutyList.stream().map(subDutyMapper::getSubDutyToSubDutyDto).toList();
         return new ResponseEntity<>(subDutyDtoList, HttpStatus.FOUND);
+    }
+
+    @PostMapping(value = "/editDescriptionSubDuty/{id}")
+    public ResponseEntity<SubDutyDto> updateDescriptionSubDuty(@Valid @RequestBody SubDutyDtoWithDescription subDutyDtoWithDescription,
+                                                             @PathVariable Long id) {
+        SubDuty subDuty = subDutyMapper.getSubDutyDtoWithDescriptionToSubDuty(subDutyDtoWithDescription);
+        SubDuty updateSubDuty = subDutyService.update(subDuty, id);
+        return new ResponseEntity<>(subDutyMapper.getSubDutyToSubDutyDto(updateSubDuty), HttpStatus.OK);
     }
 }
