@@ -1,6 +1,7 @@
 package com.example.homeserviceprovidersystem.mapper;
 
 import com.example.homeserviceprovidersystem.dto.subDutyDto.SubDutyDto;
+import com.example.homeserviceprovidersystem.dto.subDutyDto.SubDutyDtoWithBasePrice;
 import com.example.homeserviceprovidersystem.dto.subDutyDto.SubDutyDtoWithDescription;
 import com.example.homeserviceprovidersystem.entity.SubDuty;
 import org.mapstruct.Mapper;
@@ -13,4 +14,5 @@ public interface SubDutyMapper {
     SubDuty getSubDutyDtoToSubDuty(SubDutyDto subDutyDto);
 
     SubDuty getSubDutyDtoWithDescriptionToSubDuty(SubDutyDtoWithDescription subDutyDtoWithDescription);
+    SubDuty getSubDutyDtoWithBasePriceToSubDuty(SubDutyDtoWithBasePrice subDutyDtoWithBasePrice);
 }

@@ -9,5 +9,6 @@ public interface SubDutyService {
 
     List<SubDuty> findAll();
 
-    SubDuty update(SubDuty subDuty, Long id);
+    SubDuty updateDescription(SubDuty subDuty, Long id);
+    SubDuty updateBasePrice(SubDuty subDuty, Long id);
 }

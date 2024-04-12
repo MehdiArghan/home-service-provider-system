@@ -48,14 +48,26 @@ public class SubDutyServiceImpl implements SubDutyService {
     }
 
     @Override
-    public SubDuty update(SubDuty subDuty, Long id) {
+    public SubDuty updateDescription(SubDuty subDuty, Long id) {
         Optional<SubDuty> foundSubDuty = subDutyRepository.findById(id);
         if (foundSubDuty.isEmpty()) {
             throw new CustomEntityNotFoundException("no subDuty was found with this id");
         } else {
             SubDuty existSubDuty = foundSubDuty.get();
             existSubDuty.setDescription(subDuty.getDescription());
-           return subDutyRepository.save(existSubDuty);
+            return subDutyRepository.save(existSubDuty);
+        }
+    }
+
+    @Override
+    public SubDuty updateBasePrice(SubDuty subDuty, Long id) {
+        Optional<SubDuty> foundSubDuty = subDutyRepository.findById(id);
+        if (foundSubDuty.isEmpty()) {
+            throw new CustomEntityNotFoundException("no subDuty was found with this id");
+        } else {
+            SubDuty existSubDuty = foundSubDuty.get();
+            existSubDuty.setBasePrice(subDuty.getBasePrice());
+            return subDutyRepository.save(existSubDuty);
         }
     }
 }

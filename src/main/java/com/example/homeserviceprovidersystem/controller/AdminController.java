@@ -2,6 +2,7 @@ package com.example.homeserviceprovidersystem.controller;
 
 import com.example.homeserviceprovidersystem.dto.dutyDto.DutyDto;
 import com.example.homeserviceprovidersystem.dto.subDutyDto.SubDutyDto;
+import com.example.homeserviceprovidersystem.dto.subDutyDto.SubDutyDtoWithBasePrice;
 import com.example.homeserviceprovidersystem.dto.subDutyDto.SubDutyDtoWithDescription;
 import com.example.homeserviceprovidersystem.entity.Duty;
 import com.example.homeserviceprovidersystem.entity.SubDuty;
@@ -60,7 +61,14 @@ public class AdminController {
     public ResponseEntity<SubDutyDto> updateDescriptionSubDuty(@Valid @RequestBody SubDutyDtoWithDescription subDutyDtoWithDescription,
                                                              @PathVariable Long id) {
         SubDuty subDuty = subDutyMapper.getSubDutyDtoWithDescriptionToSubDuty(subDutyDtoWithDescription);
-        SubDuty updateSubDuty = subDutyService.update(subDuty, id);
+        SubDuty updateSubDuty = subDutyService.updateDescription(subDuty, id);
+        return new ResponseEntity<>(subDutyMapper.getSubDutyToSubDutyDto(updateSubDuty), HttpStatus.OK);
+    }
+    @PostMapping(value = "/editBasePriceSubDuty/{id}")
+    public ResponseEntity<SubDutyDto> updateBasePriceSubDuty(@Valid @RequestBody SubDutyDtoWithBasePrice subDutyDtoWithBasePrice,
+                                                               @PathVariable Long id) {
+        SubDuty subDuty = subDutyMapper.getSubDutyDtoWithBasePriceToSubDuty(subDutyDtoWithBasePrice);
+        SubDuty updateSubDuty = subDutyService.updateBasePrice(subDuty, id);
         return new ResponseEntity<>(subDutyMapper.getSubDutyToSubDutyDto(updateSubDuty), HttpStatus.OK);
     }
 }
