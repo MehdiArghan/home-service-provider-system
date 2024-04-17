@@ -41,4 +41,11 @@ public class PersonDto extends BaseEntity<Long> {
     @DateTimeFormat(pattern = "HH:mm:ss")
     @NotNull(message = "Please enter the appropriate time")
     LocalTime registrationTime;
+
+    public PersonDto(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    }
 }

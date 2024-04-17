@@ -70,4 +70,14 @@ public class SubDutyServiceImpl implements SubDutyService {
             return subDutyRepository.save(existSubDuty);
         }
     }
+
+    @Override
+    public SubDuty findById(Long id) {
+        Optional<SubDuty> foundSubDuty = subDutyRepository.findById(id);
+        if (foundSubDuty.isEmpty()) {
+            throw new CustomEntityNotFoundException("no subDuty was found with this id");
+        } else {
+            return foundSubDuty.get();
+        }
+    }
 }
