@@ -2,6 +2,7 @@ package com.example.homeserviceprovidersystem.controller;
 
 import com.example.homeserviceprovidersystem.dto.subDutyDto.SubDutyDto;
 import com.example.homeserviceprovidersystem.entity.SubDuty;
+import com.example.homeserviceprovidersystem.mapper.ExpertMapper;
 import com.example.homeserviceprovidersystem.mapper.SubDutyMapper;
 import com.example.homeserviceprovidersystem.service.SubDutyService;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +18,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(value = "/expert")
 public class ExpertController {
-    protected SubDutyService subDutyService;
-    protected SubDutyMapper subDutyMapper;
+    final SubDutyService subDutyService;
+    final SubDutyMapper subDutyMapper;
+    final ExpertMapper expertMapper;
 
     @GetMapping(value = "/findAllSubDuty")
     public ResponseEntity<List<SubDutyDto>> findAllSubDuty() {

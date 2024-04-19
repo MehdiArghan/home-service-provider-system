@@ -26,14 +26,14 @@ public class PersonDto extends BaseEntity<Long> {
     @Column(nullable = false)
     String lastName;
     @NotNull(message = "email cannot be null")
-    @Email(message = "please enter the appropriate Email")
+    @Email(message = "please enter an appropriate Email")
     @Column(unique = true)
     String email;
     @NotBlank(message = "please enter the appropriate password")
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d).{8,}$",
             message = "Password must be at least 8 characters long and contain at least one letter and one number")
     String password;
-    @Past(message = "date should not be in the past")
+    @PastOrPresent(message = "date should not be in the past")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Please enter the appropriate date")
     LocalDate registrationDate;
