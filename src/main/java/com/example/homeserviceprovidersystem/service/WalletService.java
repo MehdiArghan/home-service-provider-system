@@ -1,5 +1,7 @@
 package com.example.homeserviceprovidersystem.service;
 
-public class WalletService {
+import com.example.homeserviceprovidersystem.entity.Wallet;
 
+public interface WalletService {
+    Wallet save(Wallet wallet);
 }
