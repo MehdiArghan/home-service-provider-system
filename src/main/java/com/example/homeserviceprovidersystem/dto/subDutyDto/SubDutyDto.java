@@ -15,12 +15,12 @@ import lombok.experimental.FieldDefaults;
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SubDutyDto extends BaseEntity<Long> {
-    @NotBlank(message = "please enter the appropriate name")
+    @NotBlank(message = "please enter an appropriate name")
     String name;
-    @NotNull(message = "please enter the appropriate price")
+    @NotNull(message = "please enter an appropriate price")
     @Positive(message = "please enter a positive price")
     double basePrice;
-    @NotBlank(message = "please enter the appropriate description")
+    @NotBlank(message = "please enter an appropriate description")
     String description;
     Duty duty;
 }

@@ -29,7 +29,7 @@ public class PersonDto extends BaseEntity<Long> {
     @Email(message = "please enter an appropriate Email")
     @Column(unique = true)
     String email;
-    @NotBlank(message = "please enter the appropriate password")
+    @NotBlank(message = "please enter an appropriate password")
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d).{8,}$",
             message = "Password must be at least 8 characters long and contain at least one letter and one number")
     String password;
@@ -39,7 +39,7 @@ public class PersonDto extends BaseEntity<Long> {
     LocalDate registrationDate;
     @PastOrPresent(message = "Time should not be in the past")
     @DateTimeFormat(pattern = "HH:mm:ss")
-    @NotNull(message = "Please enter the appropriate time")
+    @NotNull(message = "Please enter an appropriate time")
     LocalTime registrationTime;
 
     public PersonDto(String firstName, String lastName, String email, String password) {
