@@ -33,18 +33,15 @@ public class GlobalException extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(CustomRuntimeException.class)
-    public ResponseEntity<String> handleCustomRuntimeException(CustomRuntimeException customRuntimeException) {
-        return new ResponseEntity<>(customRuntimeException.getMessage(), HttpStatus.FOUND);
-    }
-
-    @ExceptionHandler(CustomResourceNotFoundException.class)
-    public ResponseEntity<String> handleCustomResourceNotFoundException(CustomResourceNotFoundException customResourceNotFoundException) {
-        return new ResponseEntity<>(customResourceNotFoundException.getMessage(), HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(CustomEntityNotFoundException.class)
-    public ResponseEntity<String> handleCustomEntityNotFoundException(CustomEntityNotFoundException customEntityNotFoundException) {
-        return new ResponseEntity<>(customEntityNotFoundException.getMessage(), HttpStatus.NOT_FOUND);
+    @ExceptionHandler({CustomRuntimeException.class, CustomResourceNotFoundException.class, CustomEntityNotFoundException.class})
+    public ResponseEntity<String> handleCustomException(RuntimeException exception) {
+        if (exception instanceof CustomRuntimeException) {
+            return new ResponseEntity<>(exception.getMessage(), HttpStatus.FOUND);
+        } else if (exception instanceof CustomResourceNotFoundException) {
+            return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
+        } else if (exception instanceof CustomEntityNotFoundException) {
+            return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>("An unexpected error occurred", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
