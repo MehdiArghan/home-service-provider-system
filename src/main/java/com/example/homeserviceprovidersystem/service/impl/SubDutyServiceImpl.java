@@ -16,8 +16,8 @@ import java.util.Optional;
 
 @Service
 public class SubDutyServiceImpl implements SubDutyService {
-    protected SubDutyRepository subDutyRepository;
-    protected DutyService dutyService;
+    private final SubDutyRepository subDutyRepository;
+    private final DutyService dutyService;
 
     @Autowired
     public SubDutyServiceImpl(SubDutyRepository subDutyRepository, DutyService dutyService) {

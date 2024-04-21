@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Service
 public class DutyServiceImpl implements DutyService {
-    protected DutyRepository dutyRepository;
+    private final DutyRepository dutyRepository;
 
     @Autowired
     public DutyServiceImpl(DutyRepository dutyRepository) {

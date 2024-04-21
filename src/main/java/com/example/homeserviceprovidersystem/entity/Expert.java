@@ -17,8 +17,7 @@ import java.util.Set;
 public class Expert extends Person {
     @Enumerated(EnumType.STRING)
     ExpertStatus expertStatus;
-    @Lob
-    byte[] picture;
+    String pictureData;
     int score;
     @ManyToMany
     @JoinTable(

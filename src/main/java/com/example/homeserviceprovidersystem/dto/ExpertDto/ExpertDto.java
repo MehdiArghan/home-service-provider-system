@@ -6,7 +6,6 @@ import com.example.homeserviceprovidersystem.entity.Wallet;
 import com.example.homeserviceprovidersystem.entity.enums.ExpertStatus;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.Lob;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -22,11 +21,9 @@ import java.util.Set;
 public class ExpertDto extends PersonDto {
     @Enumerated(EnumType.STRING)
     ExpertStatus expertStatus;
-    @Size(max = 300 * 1024, message = "Picture size must be less than or equal to 300 KB")
     @NotNull(message = "picture must not be null")
     @NotEmpty(message = "picture must not be empty")
-    @Lob
-    byte[] picture;
+    String pictureData;
     int score;
     Set<SubDuty> subDuties;
     Wallet wallet;
