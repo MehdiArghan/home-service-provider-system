@@ -1,6 +1,7 @@
 package com.example.homeserviceprovidersystem.service.impl;
 
 import com.example.homeserviceprovidersystem.customeException.CustomBadRequestException;
+import com.example.homeserviceprovidersystem.customeException.CustomResourceNotFoundException;
 import com.example.homeserviceprovidersystem.dto.ExpertDto.ExpertDto;
 import com.example.homeserviceprovidersystem.entity.Expert;
 import com.example.homeserviceprovidersystem.entity.SubDuty;
@@ -73,5 +74,11 @@ public class ExpertServiceImpl implements ExpertService {
         expertDto.setScore(0);
         expertDto.setWallet(walletService.save(new Wallet(0.0)));
         return expertDto;
+    }
+
+    @Override
+    public List<Expert> findAllDisableExperts() {
+        return expertRepository.findAllByExpertStatus(ExpertStatus.DISABLE)
+                .orElseThrow(() -> new CustomResourceNotFoundException("There is no result"));
     }
 }
