@@ -3,7 +3,6 @@ package com.example.homeserviceprovidersystem.controller;
 import com.example.homeserviceprovidersystem.dto.ExpertDto.ExpertDto;
 import com.example.homeserviceprovidersystem.dto.subDutyDto.SubDutyDto;
 import com.example.homeserviceprovidersystem.entity.Expert;
-import com.example.homeserviceprovidersystem.entity.SubDuty;
 import com.example.homeserviceprovidersystem.mapper.ExpertMapper;
 import com.example.homeserviceprovidersystem.mapper.SubDutyMapper;
 import com.example.homeserviceprovidersystem.service.ExpertService;
@@ -27,8 +26,8 @@ public class ExpertController {
 
     @GetMapping(value = "/findAllSubDuty")
     public ResponseEntity<List<SubDutyDto>> findAllSubDuty() {
-        List<SubDuty> subDutyList = subDutyService.findAll();
-        List<SubDutyDto> subDutyDtoList = subDutyList.stream().map(subDutyMapper::getSubDutyToSubDutyDto).toList();
+        List<SubDutyDto> subDutyDtoList = subDutyService.findAll()
+                .stream().map(subDutyMapper::getSubDutyToSubDutyDto).toList();
         return new ResponseEntity<>(subDutyDtoList, HttpStatus.FOUND);
     }
 

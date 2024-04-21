@@ -6,7 +6,6 @@ import com.example.homeserviceprovidersystem.dto.subDutyDto.SubDutyDto;
 import com.example.homeserviceprovidersystem.dto.subDutyDto.SubDutyDtoWithBasePrice;
 import com.example.homeserviceprovidersystem.dto.subDutyDto.SubDutyDtoWithDescription;
 import com.example.homeserviceprovidersystem.entity.Duty;
-import com.example.homeserviceprovidersystem.entity.Expert;
 import com.example.homeserviceprovidersystem.entity.SubDuty;
 import com.example.homeserviceprovidersystem.mapper.DutyMapper;
 import com.example.homeserviceprovidersystem.mapper.ExpertMapper;
@@ -42,15 +41,14 @@ public class AdminController {
 
     @GetMapping(value = "/findAllDuty")
     public ResponseEntity<List<DutyDto>> findAllDuty() {
-        List<Duty> dutyList = dutyService.findAll();
-        List<DutyDto> dutyDtoList = dutyList.stream().map(dutyMapper::getDutytoDutyDto).toList();
+        List<DutyDto> dutyDtoList = dutyService.findAll()
+                .stream().map(dutyMapper::getDutytoDutyDto).toList();
         return new ResponseEntity<>(dutyDtoList, HttpStatus.FOUND);
     }
 
     @PostMapping(value = "/addSubDuty")
     public ResponseEntity<SubDutyDto> saveSubDuty(@Valid @RequestBody SubDutyDto subDutyDto,
                                                   @RequestParam String nameDuty) {
-        System.out.println(subDutyDto.getName() + subDutyDto.getDescription() + subDutyDto.getBasePrice());
         SubDuty subDuty = subDutyMapper.getSubDutyDtoToSubDuty(subDutyDto);
         SubDuty savedSubDuty = subDutyService.save(subDuty, nameDuty);
         return new ResponseEntity<>(subDutyMapper.getSubDutyToSubDutyDto(savedSubDuty), HttpStatus.CREATED);
@@ -58,8 +56,8 @@ public class AdminController {
 
     @GetMapping(value = "/findAllSubDuty")
     public ResponseEntity<List<SubDutyDto>> findAllSubDuty() {
-        List<SubDuty> subDutyList = subDutyService.findAll();
-        List<SubDutyDto> subDutyDtoList = subDutyList.stream().map(subDutyMapper::getSubDutyToSubDutyDto).toList();
+        List<SubDutyDto> subDutyDtoList = subDutyService.findAll()
+                .stream().map(subDutyMapper::getSubDutyToSubDutyDto).toList();
         return new ResponseEntity<>(subDutyDtoList, HttpStatus.FOUND);
     }
 
@@ -81,8 +79,8 @@ public class AdminController {
 
     @GetMapping("/findAllDisableExperts")
     public ResponseEntity<List<ExpertDto>> findAllDisableExperts() {
-        List<Expert> expertList = expertService.findAllDisableExperts();
-        List<ExpertDto> expertDtoList = expertList.stream().map(expertMapper::getExpertToExpertDto).toList();
+        List<ExpertDto> expertDtoList = expertService.findAllDisableExperts()
+                .stream().map(expertMapper::getExpertToExpertDto).toList();
         return new ResponseEntity<>(expertDtoList, HttpStatus.FOUND);
     }
 }

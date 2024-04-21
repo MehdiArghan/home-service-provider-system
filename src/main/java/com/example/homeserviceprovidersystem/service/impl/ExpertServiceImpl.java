@@ -1,6 +1,7 @@
 package com.example.homeserviceprovidersystem.service.impl;
 
 import com.example.homeserviceprovidersystem.customeException.CustomBadRequestException;
+import com.example.homeserviceprovidersystem.customeException.CustomEntityNotFoundException;
 import com.example.homeserviceprovidersystem.customeException.CustomResourceNotFoundException;
 import com.example.homeserviceprovidersystem.dto.ExpertDto.ExpertDto;
 import com.example.homeserviceprovidersystem.entity.Expert;
@@ -80,5 +81,15 @@ public class ExpertServiceImpl implements ExpertService {
     public List<Expert> findAllDisableExperts() {
         return expertRepository.findAllByExpertStatus(ExpertStatus.DISABLE)
                 .orElseThrow(() -> new CustomResourceNotFoundException("There is no result"));
+    }
+
+    @Override
+    public Expert expertConfirmation(Long id) {
+        return expertRepository.findById(id)
+                .map(expert -> {
+                    expert.setExpertStatus(ExpertStatus.ENABLE);
+                    return expertRepository.save(expert);
+                })
+                .orElseThrow(() -> new CustomEntityNotFoundException("no expert was found with this id"));
     }
 }

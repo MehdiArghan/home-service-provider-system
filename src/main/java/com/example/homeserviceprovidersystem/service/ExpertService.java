@@ -10,4 +10,6 @@ public interface ExpertService {
     Expert save(Long idSubDuty, MultipartFile multipartFile, ExpertDto expertDto);
 
     List<Expert> findAllDisableExperts();
+
+    Expert expertConfirmation(Long id);
 }
