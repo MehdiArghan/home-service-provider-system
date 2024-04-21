@@ -1,8 +1,8 @@
 package com.example.homeserviceprovidersystem.service.impl;
 
+import com.example.homeserviceprovidersystem.customeException.CustomBadRequestException;
 import com.example.homeserviceprovidersystem.customeException.CustomEntityNotFoundException;
 import com.example.homeserviceprovidersystem.customeException.CustomResourceNotFoundException;
-import com.example.homeserviceprovidersystem.customeException.CustomRuntimeException;
 import com.example.homeserviceprovidersystem.entity.Duty;
 import com.example.homeserviceprovidersystem.entity.SubDuty;
 import com.example.homeserviceprovidersystem.repositroy.SubDutyRepository;
@@ -33,7 +33,7 @@ public class SubDutyServiceImpl implements SubDutyService {
             subDuty.setDuty(duty);
             return subDutyRepository.save(subDuty);
         } else {
-            throw new CustomRuntimeException("the subDuty is available");
+            throw new CustomBadRequestException("the subDuty is available");
         }
     }
 

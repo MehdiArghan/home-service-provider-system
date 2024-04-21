@@ -1,8 +1,8 @@
 package com.example.homeserviceprovidersystem.service.impl;
 
+import com.example.homeserviceprovidersystem.customeException.CustomBadRequestException;
 import com.example.homeserviceprovidersystem.customeException.CustomEntityNotFoundException;
 import com.example.homeserviceprovidersystem.customeException.CustomResourceNotFoundException;
-import com.example.homeserviceprovidersystem.customeException.CustomRuntimeException;
 import com.example.homeserviceprovidersystem.entity.Duty;
 import com.example.homeserviceprovidersystem.repositroy.DutyRepository;
 import com.example.homeserviceprovidersystem.service.DutyService;
@@ -27,7 +27,7 @@ public class DutyServiceImpl implements DutyService {
         if (foundDuty.isEmpty()) {
             return dutyRepository.save(duty);
         } else {
-            throw new CustomRuntimeException("Duty with name '" + duty.getName() + "'available");
+            throw new CustomBadRequestException("Duty with name '" + duty.getName() + "'available");
         }
     }
 
