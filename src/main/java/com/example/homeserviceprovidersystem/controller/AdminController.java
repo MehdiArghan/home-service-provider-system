@@ -1,14 +1,18 @@
 package com.example.homeserviceprovidersystem.controller;
 
+import com.example.homeserviceprovidersystem.dto.ExpertDto.ExpertDto;
 import com.example.homeserviceprovidersystem.dto.dutyDto.DutyDto;
 import com.example.homeserviceprovidersystem.dto.subDutyDto.SubDutyDto;
 import com.example.homeserviceprovidersystem.dto.subDutyDto.SubDutyDtoWithBasePrice;
 import com.example.homeserviceprovidersystem.dto.subDutyDto.SubDutyDtoWithDescription;
 import com.example.homeserviceprovidersystem.entity.Duty;
+import com.example.homeserviceprovidersystem.entity.Expert;
 import com.example.homeserviceprovidersystem.entity.SubDuty;
 import com.example.homeserviceprovidersystem.mapper.DutyMapper;
+import com.example.homeserviceprovidersystem.mapper.ExpertMapper;
 import com.example.homeserviceprovidersystem.mapper.SubDutyMapper;
 import com.example.homeserviceprovidersystem.service.DutyService;
+import com.example.homeserviceprovidersystem.service.ExpertService;
 import com.example.homeserviceprovidersystem.service.SubDutyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +30,8 @@ public class AdminController {
     final DutyMapper dutyMapper;
     final SubDutyService subDutyService;
     final SubDutyMapper subDutyMapper;
+    final ExpertService expertService;
+    final ExpertMapper expertMapper;
 
     @PostMapping(value = "/addDuty")
     public ResponseEntity<DutyDto> saveDuty(@Valid @RequestBody DutyDto dutyDto) {
@@ -59,16 +65,24 @@ public class AdminController {
 
     @PostMapping(value = "/editDescriptionSubDuty/{id}")
     public ResponseEntity<SubDutyDto> updateDescriptionSubDuty(@Valid @RequestBody SubDutyDtoWithDescription subDutyDtoWithDescription,
-                                                             @PathVariable Long id) {
+                                                               @PathVariable Long id) {
         SubDuty subDuty = subDutyMapper.getSubDutyDtoWithDescriptionToSubDuty(subDutyDtoWithDescription);
         SubDuty updateSubDuty = subDutyService.updateDescription(subDuty, id);
         return new ResponseEntity<>(subDutyMapper.getSubDutyToSubDutyDto(updateSubDuty), HttpStatus.OK);
     }
+
     @PostMapping(value = "/editBasePriceSubDuty/{id}")
     public ResponseEntity<SubDutyDto> updateBasePriceSubDuty(@Valid @RequestBody SubDutyDtoWithBasePrice subDutyDtoWithBasePrice,
-                                                               @PathVariable Long id) {
+                                                             @PathVariable Long id) {
         SubDuty subDuty = subDutyMapper.getSubDutyDtoWithBasePriceToSubDuty(subDutyDtoWithBasePrice);
         SubDuty updateSubDuty = subDutyService.updateBasePrice(subDuty, id);
         return new ResponseEntity<>(subDutyMapper.getSubDutyToSubDutyDto(updateSubDuty), HttpStatus.OK);
+    }
+
+    @GetMapping("/findAllDisableExperts")
+    public ResponseEntity<List<ExpertDto>> findAllDisableExperts() {
+        List<Expert> expertList = expertService.findAllDisableExperts();
+        List<ExpertDto> expertDtoList = expertList.stream().map(expertMapper::getExpertToExpertDto).toList();
+        return new ResponseEntity<>(expertDtoList, HttpStatus.FOUND);
     }
 }
