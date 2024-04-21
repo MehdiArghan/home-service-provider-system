@@ -12,5 +12,5 @@ import java.util.Optional;
 public interface ExpertRepository extends JpaRepository<Expert, Long> {
     Optional<Expert> findByEmail(String Email);
 
-    Optional<List<Expert>> findAllByExpertStatus(ExpertStatus expertStatus);
+    List<Expert> findAllByExpertStatus(ExpertStatus expertStatus);
 }

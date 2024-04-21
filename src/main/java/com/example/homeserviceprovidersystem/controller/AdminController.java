@@ -83,4 +83,10 @@ public class AdminController {
                 .stream().map(expertMapper::getExpertToExpertDto).toList();
         return new ResponseEntity<>(expertDtoList, HttpStatus.FOUND);
     }
+
+    @PatchMapping("/expertConfirmation/{id}")
+    public ResponseEntity<ExpertDto> expertConfirmation(@PathVariable Long id) {
+        ExpertDto expertDto = expertMapper.getExpertToExpertDto(expertService.expertConfirmation(id));
+        return new ResponseEntity<>(expertDto, HttpStatus.OK);
+    }
 }

@@ -79,16 +79,24 @@ public class ExpertServiceImpl implements ExpertService {
 
     @Override
     public List<Expert> findAllDisableExperts() {
-        return expertRepository.findAllByExpertStatus(ExpertStatus.DISABLE)
-                .orElseThrow(() -> new CustomResourceNotFoundException("There is no result"));
+        List<Expert> expertList = expertRepository.findAllByExpertStatus(ExpertStatus.DISABLE);
+        if (expertList.isEmpty()) {
+            throw new CustomResourceNotFoundException("There is no result");
+        } else {
+            return expertList;
+        }
     }
 
     @Override
     public Expert expertConfirmation(Long id) {
         return expertRepository.findById(id)
                 .map(expert -> {
-                    expert.setExpertStatus(ExpertStatus.ENABLE);
-                    return expertRepository.save(expert);
+                    if (expert.getExpertStatus() == ExpertStatus.DISABLE) {
+                        expert.setExpertStatus(ExpertStatus.ENABLE);
+                        return expertRepository.save(expert);
+                    } else {
+                        throw new CustomResourceNotFoundException("This expert is enable");
+                    }
                 })
                 .orElseThrow(() -> new CustomEntityNotFoundException("no expert was found with this id"));
     }
