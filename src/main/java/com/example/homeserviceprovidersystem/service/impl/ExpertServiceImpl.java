@@ -95,7 +95,7 @@ public class ExpertServiceImpl implements ExpertService {
                         expert.setExpertStatus(ExpertStatus.ENABLE);
                         return expertRepository.save(expert);
                     } else {
-                        throw new CustomResourceNotFoundException("This expert is enable");
+                        throw new CustomBadRequestException("This expert is enable");
                     }
                 })
                 .orElseThrow(() -> new CustomEntityNotFoundException("no expert was found with this id"));
