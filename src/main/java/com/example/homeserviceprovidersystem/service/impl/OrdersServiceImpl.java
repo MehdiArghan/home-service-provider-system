@@ -7,8 +7,4 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class OrdersServiceImpl implements OrdersService {
-    @Override
-    public Orders save(Long customerId, Long expertId, Long subDutyId, OrderSummaryDto orderSummaryDto) {
-        return null;
-    }
 }
