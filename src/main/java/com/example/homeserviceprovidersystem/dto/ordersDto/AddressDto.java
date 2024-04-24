@@ -1,6 +1,5 @@
 package com.example.homeserviceprovidersystem.dto.ordersDto;
 
-import com.example.homeserviceprovidersystem.base.BaseEntity;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -11,7 +10,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @ToString
-public class AddressDto extends BaseEntity<Long> {
+public class AddressDto {
     @NotBlank(message = "Please enter the name of your province")
     String province;
     @NotBlank(message = "Please enter the name of your city")
