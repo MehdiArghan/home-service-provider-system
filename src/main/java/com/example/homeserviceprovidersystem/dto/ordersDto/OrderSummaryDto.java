@@ -1,6 +1,7 @@
 package com.example.homeserviceprovidersystem.dto.ordersDto;
 
 import com.example.homeserviceprovidersystem.base.BaseEntity;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -32,5 +33,6 @@ public class OrderSummaryDto extends BaseEntity<Long> {
     @DateTimeFormat(pattern = "HH:mm:ss")
     @NotNull(message = "Please enter an appropriate time")
     LocalTime TimeOfWord;
+    @Valid
     AddressDto address;
 }

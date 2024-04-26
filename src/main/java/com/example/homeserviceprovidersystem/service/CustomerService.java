@@ -4,4 +4,6 @@ import com.example.homeserviceprovidersystem.entity.Customer;
 
 public interface CustomerService {
     Customer save(Customer customer);
+
+    Customer findById(Long id);
 }

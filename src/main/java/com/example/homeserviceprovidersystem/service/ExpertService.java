@@ -12,4 +12,6 @@ public interface ExpertService {
     List<Expert> findAllDisableExperts();
 
     Expert expertConfirmation(Long id);
+
+    Expert findById(Long id);
 }

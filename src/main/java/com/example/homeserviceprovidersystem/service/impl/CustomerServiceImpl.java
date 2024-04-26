@@ -1,6 +1,7 @@
 package com.example.homeserviceprovidersystem.service.impl;
 
 import com.example.homeserviceprovidersystem.customeException.CustomBadRequestException;
+import com.example.homeserviceprovidersystem.customeException.CustomEntityNotFoundException;
 import com.example.homeserviceprovidersystem.entity.Customer;
 import com.example.homeserviceprovidersystem.entity.Wallet;
 import com.example.homeserviceprovidersystem.repositroy.CustomerRepository;
@@ -32,5 +33,11 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setRegistrationTime(LocalTime.now());
         customer.setWallet(walletService.save(new Wallet(2000.0)));
         return customerRepository.save(customer);
+    }
+
+    @Override
+    public Customer findById(Long id) {
+        return customerRepository.findById(id)
+                .orElseThrow(() -> new CustomEntityNotFoundException("customer with this id was not found"));
     }
 }

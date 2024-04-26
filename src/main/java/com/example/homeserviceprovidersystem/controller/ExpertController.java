@@ -24,13 +24,6 @@ public class ExpertController {
     final ExpertMapper expertMapper;
     final ExpertService expertService;
 
-    @GetMapping(value = "/findAllSubDuty")
-    public ResponseEntity<List<SubDutyDto>> findAllSubDuty() {
-        List<SubDutyDto> subDutyDtoList = subDutyService.findAll()
-                .stream().map(subDutyMapper::getSubDutyToSubDutyDto).toList();
-        return new ResponseEntity<>(subDutyDtoList, HttpStatus.FOUND);
-    }
-
     @PostMapping("/addExpert/{idSubDuty}")
     public ResponseEntity<ExpertDto> saveExpert(
             @PathVariable Long idSubDuty,
@@ -42,5 +35,12 @@ public class ExpertController {
     ) {
         Expert savedExpert = expertService.save(idSubDuty, multipartFile, new ExpertDto(firstName, lastName, email, password));
         return new ResponseEntity<>(expertMapper.getExpertToExpertDto(savedExpert), HttpStatus.CREATED);
+    }
+
+    @GetMapping(value = "/findAllSubDuty")
+    public ResponseEntity<List<SubDutyDto>> findAllSubDuty() {
+        List<SubDutyDto> subDutyDtoList = subDutyService.findAll()
+                .stream().map(subDutyMapper::getSubDutyToSubDutyDto).toList();
+        return new ResponseEntity<>(subDutyDtoList, HttpStatus.FOUND);
     }
 }

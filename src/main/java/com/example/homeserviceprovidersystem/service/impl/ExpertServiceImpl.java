@@ -23,7 +23,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -100,5 +99,11 @@ public class ExpertServiceImpl implements ExpertService {
                     }
                 })
                 .orElseThrow(() -> new CustomEntityNotFoundException("no expert was found with this id"));
+    }
+
+    @Override
+    public Expert findById(Long id) {
+        return expertRepository.findById(id)
+                .orElseThrow(() -> new CustomEntityNotFoundException("expert with this id was not found"));
     }
 }

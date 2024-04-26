@@ -39,26 +39,12 @@ public class AdminController {
         return new ResponseEntity<>(dutyMapper.getDutytoDutyDto(savedDuty), HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "/findAllDuty")
-    public ResponseEntity<List<DutyDto>> findAllDuty() {
-        List<DutyDto> dutyDtoList = dutyService.findAll()
-                .stream().map(dutyMapper::getDutytoDutyDto).toList();
-        return new ResponseEntity<>(dutyDtoList, HttpStatus.FOUND);
-    }
-
     @PostMapping(value = "/addSubDuty")
     public ResponseEntity<SubDutyDto> saveSubDuty(@Valid @RequestBody SubDutyDto subDutyDto,
                                                   @RequestParam String nameDuty) {
         SubDuty subDuty = subDutyMapper.getSubDutyDtoToSubDuty(subDutyDto);
         SubDuty savedSubDuty = subDutyService.save(subDuty, nameDuty);
         return new ResponseEntity<>(subDutyMapper.getSubDutyToSubDutyDto(savedSubDuty), HttpStatus.CREATED);
-    }
-
-    @GetMapping(value = "/findAllSubDuty")
-    public ResponseEntity<List<SubDutyDto>> findAllSubDuty() {
-        List<SubDutyDto> subDutyDtoList = subDutyService.findAll()
-                .stream().map(subDutyMapper::getSubDutyToSubDutyDto).toList();
-        return new ResponseEntity<>(subDutyDtoList, HttpStatus.FOUND);
     }
 
     @PostMapping(value = "/editDescriptionSubDuty/{id}")
@@ -77,16 +63,30 @@ public class AdminController {
         return new ResponseEntity<>(subDutyMapper.getSubDutyToSubDutyDto(updateSubDuty), HttpStatus.OK);
     }
 
+    @PatchMapping("/expertConfirmation/{id}")
+    public ResponseEntity<ExpertDto> expertConfirmation(@PathVariable Long id) {
+        ExpertDto expertDto = expertMapper.getExpertToExpertDto(expertService.expertConfirmation(id));
+        return new ResponseEntity<>(expertDto, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/findAllDuty")
+    public ResponseEntity<List<DutyDto>> findAllDuty() {
+        List<DutyDto> dutyDtoList = dutyService.findAll()
+                .stream().map(dutyMapper::getDutytoDutyDto).toList();
+        return new ResponseEntity<>(dutyDtoList, HttpStatus.FOUND);
+    }
+
+    @GetMapping(value = "/findAllSubDuty")
+    public ResponseEntity<List<SubDutyDto>> findAllSubDuty() {
+        List<SubDutyDto> subDutyDtoList = subDutyService.findAll()
+                .stream().map(subDutyMapper::getSubDutyToSubDutyDto).toList();
+        return new ResponseEntity<>(subDutyDtoList, HttpStatus.FOUND);
+    }
+
     @GetMapping("/findAllDisableExperts")
     public ResponseEntity<List<ExpertDto>> findAllDisableExperts() {
         List<ExpertDto> expertDtoList = expertService.findAllDisableExperts()
                 .stream().map(expertMapper::getExpertToExpertDto).toList();
         return new ResponseEntity<>(expertDtoList, HttpStatus.FOUND);
-    }
-
-    @PatchMapping("/expertConfirmation/{id}")
-    public ResponseEntity<ExpertDto> expertConfirmation(@PathVariable Long id) {
-        ExpertDto expertDto = expertMapper.getExpertToExpertDto(expertService.expertConfirmation(id));
-        return new ResponseEntity<>(expertDto, HttpStatus.OK);
     }
 }

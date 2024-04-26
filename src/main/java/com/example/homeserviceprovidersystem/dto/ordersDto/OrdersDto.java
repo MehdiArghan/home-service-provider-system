@@ -1,11 +1,11 @@
 package com.example.homeserviceprovidersystem.dto.ordersDto;
 
 import com.example.homeserviceprovidersystem.base.BaseEntity;
-import com.example.homeserviceprovidersystem.entity.Address;
 import com.example.homeserviceprovidersystem.entity.Customer;
 import com.example.homeserviceprovidersystem.entity.Expert;
 import com.example.homeserviceprovidersystem.entity.SubDuty;
 import com.example.homeserviceprovidersystem.entity.enums.OrderStatus;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -37,7 +37,9 @@ public class OrdersDto extends BaseEntity<Long> {
     @DateTimeFormat(pattern = "HH:mm:ss")
     @NotNull(message = "Please enter an appropriate time")
     LocalTime TimeOfWord;
+    @Valid
     AddressDto address;
+    @NotBlank(message = "please enter an appropriate orderStatus")
     OrderStatus orderStatus;
     Customer customer;
     Expert expert;
