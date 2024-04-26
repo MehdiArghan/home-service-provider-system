@@ -14,4 +14,6 @@ public interface ExpertService {
     Expert expertConfirmation(Long id);
 
     Expert findById(Long id);
+
+    List<Expert> findAll();
 }

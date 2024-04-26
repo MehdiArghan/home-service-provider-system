@@ -106,4 +106,14 @@ public class ExpertServiceImpl implements ExpertService {
         return expertRepository.findById(id)
                 .orElseThrow(() -> new CustomEntityNotFoundException("expert with this id was not found"));
     }
+
+    @Override
+    public List<Expert> findAll() {
+        List<Expert> expertList = expertRepository.findAll();
+        if (expertList.isEmpty()) {
+            throw new CustomResourceNotFoundException("There is no result");
+        } else {
+            return expertList;
+        }
+    }
 }
