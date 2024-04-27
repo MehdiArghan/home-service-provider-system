@@ -1,7 +1,6 @@
 package com.example.homeserviceprovidersystem.dto.expertsuggestions;
 
 import com.example.homeserviceprovidersystem.base.BaseEntity;
-import com.example.homeserviceprovidersystem.dto.ordersDto.OrderSummaryDto;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -18,15 +17,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @ToString
-public class ExpertSuggestionsDto extends BaseEntity<Long> {
-    @FutureOrPresent(message = "Date must be in the present or future")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotNull(message = "Please enter the appropriate date")
-    LocalDate offerDate;
-    @FutureOrPresent(message = "time must be in the present or future")
-    @DateTimeFormat(pattern = "HH:mm:ss")
-    @NotNull(message = "Please enter an appropriate time")
-    LocalTime offerTime;
+public class ExpertSuggestionsSummaryDto extends BaseEntity<Long> {
     @NotNull(message = "value is null")
     @Positive(message = "value proposedPrice must be positive")
     double ProposedPrice;
@@ -41,5 +32,4 @@ public class ExpertSuggestionsDto extends BaseEntity<Long> {
     @NotNull(message = "value is null")
     @Positive(message = "value proposedPrice must be positive")
     Integer durationOfWorkPerHour;
-    OrderSummaryDto orderSummaryDto;
 }
