@@ -1,16 +1,10 @@
 package com.example.homeserviceprovidersystem.service.impl;
 
 import com.example.homeserviceprovidersystem.customeException.CustomBadRequestException;
-import com.example.homeserviceprovidersystem.entity.Customer;
-import com.example.homeserviceprovidersystem.entity.Expert;
-import com.example.homeserviceprovidersystem.entity.Orders;
-import com.example.homeserviceprovidersystem.entity.SubDuty;
+import com.example.homeserviceprovidersystem.entity.*;
 import com.example.homeserviceprovidersystem.entity.enums.OrderStatus;
 import com.example.homeserviceprovidersystem.repositroy.OrdersRepository;
-import com.example.homeserviceprovidersystem.service.CustomerService;
-import com.example.homeserviceprovidersystem.service.ExpertService;
-import com.example.homeserviceprovidersystem.service.OrdersService;
-import com.example.homeserviceprovidersystem.service.SubDutyService;
+import com.example.homeserviceprovidersystem.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,17 +14,20 @@ public class OrdersServiceImpl implements OrdersService {
     private final CustomerService customerService;
     private final ExpertService expertService;
     private final SubDutyService subDutyService;
+    private final WalletService walletService;
 
     @Autowired
     public OrdersServiceImpl(
             OrdersRepository ordersRepository,
             CustomerService customerService,
             ExpertService expertService,
-            SubDutyService subDutyService) {
+            SubDutyService subDutyService,
+            WalletService walletService) {
         this.ordersRepository = ordersRepository;
         this.customerService = customerService;
         this.expertService = expertService;
         this.subDutyService = subDutyService;
+        this.walletService = walletService;
     }
 
     @Override
@@ -38,15 +35,34 @@ public class OrdersServiceImpl implements OrdersService {
         Customer customer = customerService.findById(customerId);
         Expert expert = expertService.findById(expertId);
         SubDuty subDuty = subDutyService.findById(subDutyId);
-        if (expert.getSubDuties().stream().noneMatch(sb -> sb.getId().equals(subDutyId))
-                || subDuty.getBasePrice() > orders.getProposedPrice()) {
-            throw new CustomBadRequestException("Please enter the correct information");
-        } else {
-            orders.setCustomer(customer);
-            orders.setExpert(expert);
-            orders.setSubDuty(subDuty);
-            orders.setOrderStatus(OrderStatus.ORDER_WAITING_FOR_SPECIALIST_SELECTION);
-            return ordersRepository.save(orders);
+        validateOrder(customer, expert, subDuty, subDutyId, orders);
+        updateCustomerWallet(customer, orders);
+        setOrderDetails(orders, customer, expert, subDuty);
+        return ordersRepository.save(orders);
+    }
+
+    private void validateOrder(Customer customer, Expert expert, SubDuty subDuty, Long subDutyId, Orders orders) {
+        if (
+                expert.getSubDuties().stream().noneMatch(sb -> sb.getId().equals(subDutyId)) ||
+                        subDuty.getBasePrice() > orders.getProposedPrice() ||
+                        customer.getWallet().getPrice() < orders.getProposedPrice()
+        ) {
+            throw new CustomBadRequestException("Expert is not assigned to the selected subDuty or" +
+                    "Proposed price must be greater than or equal to the base price of the subDuty or" +
+                    "your account balance is insufficient");
         }
+    }
+
+    private void updateCustomerWallet(Customer customer, Orders orders) {
+        Wallet wallet = customer.getWallet();
+        wallet.setPrice(wallet.getPrice() - orders.getProposedPrice());
+        walletService.save(wallet);
+    }
+
+    private void setOrderDetails(Orders orders, Customer customer, Expert expert, SubDuty subDuty) {
+        orders.setCustomer(customer);
+        orders.setExpert(expert);
+        orders.setSubDuty(subDuty);
+        orders.setOrderStatus(OrderStatus.ORDER_WAITING_FOR_SPECIALIST_SUGGESTION);
     }
 }
