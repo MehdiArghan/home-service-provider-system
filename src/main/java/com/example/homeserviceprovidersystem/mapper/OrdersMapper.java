@@ -13,4 +13,6 @@ public interface OrdersMapper {
     Orders getOrdersDtoToOrders(OrdersDto ordersDto);
 
     Orders getOrderSummaryDtoToOrders(OrderSummaryDto orderSummaryDto);
+
+    OrderSummaryDto getOrdersToOrderSummaryDto(Orders orders);
 }

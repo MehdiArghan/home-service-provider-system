@@ -5,6 +5,7 @@ import com.example.homeserviceprovidersystem.dto.ordersDto.OrderSummaryDto;
 import com.example.homeserviceprovidersystem.dto.subDutyDto.SubDutyDto;
 import com.example.homeserviceprovidersystem.entity.Expert;
 import com.example.homeserviceprovidersystem.mapper.ExpertMapper;
+import com.example.homeserviceprovidersystem.mapper.OrdersMapper;
 import com.example.homeserviceprovidersystem.mapper.SubDutyMapper;
 import com.example.homeserviceprovidersystem.service.ExpertService;
 import com.example.homeserviceprovidersystem.service.OrdersService;
@@ -26,6 +27,7 @@ public class ExpertController {
     final ExpertMapper expertMapper;
     final ExpertService expertService;
     final OrdersService ordersService;
+    final OrdersMapper ordersMapper;
 
     @PostMapping("/addExpert/{idSubDuty}")
     public ResponseEntity<ExpertDto> saveExpert(
@@ -45,5 +47,12 @@ public class ExpertController {
         List<SubDutyDto> subDutyDtoList = subDutyService.findAll()
                 .stream().map(subDutyMapper::getSubDutyToSubDutyDto).toList();
         return new ResponseEntity<>(subDutyDtoList, HttpStatus.FOUND);
+    }
+
+    @GetMapping(value = "findAllOrders")
+    public ResponseEntity<List<OrderSummaryDto>> findAllOrders() {
+        List<OrderSummaryDto> orders = ordersService.findAllOrderWaitingForSpecialistSuggestion()
+                .stream().map(ordersMapper::getOrdersToOrderSummaryDto).toList();
+        return new ResponseEntity<>(orders, HttpStatus.FOUND);
     }
 }
