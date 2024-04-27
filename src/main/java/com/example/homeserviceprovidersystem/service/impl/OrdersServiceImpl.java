@@ -1,6 +1,7 @@
 package com.example.homeserviceprovidersystem.service.impl;
 
 import com.example.homeserviceprovidersystem.customeException.CustomBadRequestException;
+import com.example.homeserviceprovidersystem.customeException.CustomEntityNotFoundException;
 import com.example.homeserviceprovidersystem.customeException.CustomResourceNotFoundException;
 import com.example.homeserviceprovidersystem.entity.*;
 import com.example.homeserviceprovidersystem.entity.enums.OrderStatus;
@@ -77,5 +78,11 @@ public class OrdersServiceImpl implements OrdersService {
         } else {
             return allOrdersByOrderStatus;
         }
+    }
+
+    @Override
+    public Orders findById(Long id) {
+       return ordersRepository.findById(id)
+               .orElseThrow(() -> new CustomEntityNotFoundException("orders with this id was not found"));
     }
 }
