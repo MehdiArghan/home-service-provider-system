@@ -1,7 +1,7 @@
 package com.example.homeserviceprovidersystem.mapper;
 
-import com.example.homeserviceprovidersystem.dto.ExpertDto.ExpertDto;
-import com.example.homeserviceprovidersystem.dto.ExpertDto.ExpertSummaryDto;
+import com.example.homeserviceprovidersystem.dto.expertDto.ExpertDto;
+import com.example.homeserviceprovidersystem.dto.expertDto.ExpertSummaryDto;
 import com.example.homeserviceprovidersystem.entity.Expert;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;

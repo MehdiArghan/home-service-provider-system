@@ -1,4 +1,4 @@
-package com.example.homeserviceprovidersystem.dto.ExpertDto;
+package com.example.homeserviceprovidersystem.dto.expertDto;
 
 import com.example.homeserviceprovidersystem.base.BaseEntity;
 import com.example.homeserviceprovidersystem.entity.SubDuty;

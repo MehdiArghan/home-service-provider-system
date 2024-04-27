@@ -1,6 +1,6 @@
 package com.example.homeserviceprovidersystem.controller;
 
-import com.example.homeserviceprovidersystem.dto.ExpertDto.ExpertDto;
+import com.example.homeserviceprovidersystem.dto.expertDto.ExpertDto;
 import com.example.homeserviceprovidersystem.dto.ordersDto.OrderSummaryDto;
 import com.example.homeserviceprovidersystem.dto.subDutyDto.SubDutyDto;
 import com.example.homeserviceprovidersystem.entity.Expert;
@@ -49,9 +49,9 @@ public class ExpertController {
         return new ResponseEntity<>(subDutyDtoList, HttpStatus.FOUND);
     }
 
-    @GetMapping(value = "findAllOrders")
-    public ResponseEntity<List<OrderSummaryDto>> findAllOrders() {
-        List<OrderSummaryDto> orders = ordersService.findAllOrderWaitingForSpecialistSuggestion()
+    @GetMapping(value = "findAllOrders/{expertId}")
+    public ResponseEntity<List<OrderSummaryDto>> findAllOrders(@PathVariable Long expertId) {
+        List<OrderSummaryDto> orders = ordersService.findAllOrderWaitingForSpecialistSuggestion(expertId)
                 .stream().map(ordersMapper::getOrdersToOrderSummaryDto).toList();
         return new ResponseEntity<>(orders, HttpStatus.FOUND);
     }

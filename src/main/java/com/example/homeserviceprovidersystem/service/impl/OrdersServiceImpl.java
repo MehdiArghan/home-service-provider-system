@@ -70,8 +70,8 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
-    public List<Orders> findAllOrderWaitingForSpecialistSuggestion() {
-        List<Orders> allOrdersByOrderStatus = ordersRepository.findAllOrdersByOrderStatus(OrderStatus.ORDER_WAITING_FOR_SPECIALIST_SUGGESTION);
+    public List<Orders> findAllOrderWaitingForSpecialistSuggestion(Long expertId) {
+        List<Orders> allOrdersByOrderStatus = ordersRepository.findAllOrdersByOrderStatus(expertId,OrderStatus.ORDER_WAITING_FOR_SPECIALIST_SUGGESTION);
         if (allOrdersByOrderStatus.isEmpty()) {
             throw new CustomResourceNotFoundException("There is no result");
         } else {

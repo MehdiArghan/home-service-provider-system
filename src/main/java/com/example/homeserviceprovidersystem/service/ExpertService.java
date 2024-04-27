@@ -1,6 +1,6 @@
 package com.example.homeserviceprovidersystem.service;
 
-import com.example.homeserviceprovidersystem.dto.ExpertDto.ExpertDto;
+import com.example.homeserviceprovidersystem.dto.expertDto.ExpertDto;
 import com.example.homeserviceprovidersystem.entity.Expert;
 import org.springframework.web.multipart.MultipartFile;
 

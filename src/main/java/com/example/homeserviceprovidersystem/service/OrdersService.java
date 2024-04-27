@@ -7,5 +7,5 @@ import java.util.List;
 public interface OrdersService {
     Orders save(Long customerId, Long expertId, Long subDutyId, Orders orders);
 
-    List<Orders> findAllOrderWaitingForSpecialistSuggestion();
+    List<Orders> findAllOrderWaitingForSpecialistSuggestion(Long expertId);
 }

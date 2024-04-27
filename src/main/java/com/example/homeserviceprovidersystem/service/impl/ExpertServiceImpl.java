@@ -3,7 +3,7 @@ package com.example.homeserviceprovidersystem.service.impl;
 import com.example.homeserviceprovidersystem.customeException.CustomBadRequestException;
 import com.example.homeserviceprovidersystem.customeException.CustomEntityNotFoundException;
 import com.example.homeserviceprovidersystem.customeException.CustomResourceNotFoundException;
-import com.example.homeserviceprovidersystem.dto.ExpertDto.ExpertDto;
+import com.example.homeserviceprovidersystem.dto.expertDto.ExpertDto;
 import com.example.homeserviceprovidersystem.entity.Expert;
 import com.example.homeserviceprovidersystem.entity.SubDuty;
 import com.example.homeserviceprovidersystem.entity.Wallet;

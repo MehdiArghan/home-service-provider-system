@@ -1,6 +1,6 @@
 package com.example.homeserviceprovidersystem.controller;
 
-import com.example.homeserviceprovidersystem.dto.ExpertDto.ExpertDto;
+import com.example.homeserviceprovidersystem.dto.expertDto.ExpertDto;
 import com.example.homeserviceprovidersystem.dto.dutyDto.DutyDto;
 import com.example.homeserviceprovidersystem.dto.subDutyDto.SubDutyDto;
 import com.example.homeserviceprovidersystem.dto.subDutyDto.SubDutyDtoWithBasePrice;
