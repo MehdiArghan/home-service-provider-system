@@ -1,11 +1,13 @@
 package com.example.homeserviceprovidersystem.controller;
 
 import com.example.homeserviceprovidersystem.dto.ExpertDto.ExpertDto;
+import com.example.homeserviceprovidersystem.dto.ordersDto.OrderSummaryDto;
 import com.example.homeserviceprovidersystem.dto.subDutyDto.SubDutyDto;
 import com.example.homeserviceprovidersystem.entity.Expert;
 import com.example.homeserviceprovidersystem.mapper.ExpertMapper;
 import com.example.homeserviceprovidersystem.mapper.SubDutyMapper;
 import com.example.homeserviceprovidersystem.service.ExpertService;
+import com.example.homeserviceprovidersystem.service.OrdersService;
 import com.example.homeserviceprovidersystem.service.SubDutyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,7 @@ public class ExpertController {
     final SubDutyMapper subDutyMapper;
     final ExpertMapper expertMapper;
     final ExpertService expertService;
+    final OrdersService ordersService;
 
     @PostMapping("/addExpert/{idSubDuty}")
     public ResponseEntity<ExpertDto> saveExpert(

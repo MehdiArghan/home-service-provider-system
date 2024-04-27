@@ -1,6 +1,5 @@
 package com.example.homeserviceprovidersystem.dto.ordersDto;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;

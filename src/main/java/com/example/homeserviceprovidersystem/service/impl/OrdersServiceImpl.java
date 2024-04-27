@@ -1,12 +1,15 @@
 package com.example.homeserviceprovidersystem.service.impl;
 
 import com.example.homeserviceprovidersystem.customeException.CustomBadRequestException;
+import com.example.homeserviceprovidersystem.customeException.CustomResourceNotFoundException;
 import com.example.homeserviceprovidersystem.entity.*;
 import com.example.homeserviceprovidersystem.entity.enums.OrderStatus;
 import com.example.homeserviceprovidersystem.repositroy.OrdersRepository;
 import com.example.homeserviceprovidersystem.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class OrdersServiceImpl implements OrdersService {
@@ -64,5 +67,15 @@ public class OrdersServiceImpl implements OrdersService {
         orders.setExpert(expert);
         orders.setSubDuty(subDuty);
         orders.setOrderStatus(OrderStatus.ORDER_WAITING_FOR_SPECIALIST_SUGGESTION);
+    }
+
+    @Override
+    public List<Orders> findAllOrderWaitingForSpecialistSuggestion() {
+        List<Orders> allOrdersByOrderStatus = ordersRepository.findAllOrdersByOrderStatus(OrderStatus.ORDER_WAITING_FOR_SPECIALIST_SUGGESTION);
+        if (allOrdersByOrderStatus.isEmpty()) {
+            throw new CustomResourceNotFoundException("There is no result");
+        } else {
+            return allOrdersByOrderStatus;
+        }
     }
 }
