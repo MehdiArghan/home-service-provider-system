@@ -33,19 +33,28 @@ public class ExpertSuggestionsImpl implements ExpertSuggestionsService {
     public ExpertSuggestions save(Long expertId, Long ordersId, ExpertSuggestions expertSuggestions) {
         Expert expert = expertService.findById(expertId);
         Orders orders = ordersService.findById(ordersId);
-        validateExpertSuggestions(orders, expertSuggestions);
+        validateExpertSuggestions(expert, orders, expertSuggestions);
         setExpertSuggestionsDetails(expertSuggestions, orders, expert);
         return expertSuggestionsRepository.save(expertSuggestions);
     }
 
-    private void validateExpertSuggestions(Orders orders, ExpertSuggestions expertSuggestions) {
-        if (
-                orders.getSubDuty().getBasePrice() > expertSuggestions.getProposedPrice() ||
-                        expertSuggestions.getDateOfStartWork().isBefore(orders.getDateOfWork())
-        ) {
-            throw new CustomBadRequestException("Proposed price must be greater than or equal to the base price of the subDuty or" +
-                    "Date of Start Work must be on or after the date of work");
+    private void validateExpertSuggestions(
+            Expert expert,
+            Orders orders,
+            ExpertSuggestions expertSuggestions) {
+
+        if (expert.getSubDuties().stream().noneMatch(subDuty -> orders.getSubDuty().getName().equals(subDuty.getName())) ||
+                orders.getSubDuty().getBasePrice() > expertSuggestions.getProposedPrice()) {
+            throw new CustomBadRequestException("Please select the order related to your specialty or " +
+                    "Proposed price must be greater than or equal to the base price of the subDuty");
         }
+        if (expertSuggestions.getDateOfStartWork().isBefore(orders.getDateOfWork())) {
+            throw new CustomBadRequestException("Date of Start Work must be on or after the date of work");
+        }
+        if (expertSuggestions.getTimeOfStartWork().isBefore(orders.getTimeOfWord())) {
+            throw new CustomBadRequestException("Time of Start Work must be on or after the Time of work");
+        }
+
     }
 
     private void setExpertSuggestionsDetails(ExpertSuggestions expertSuggestionsDetails, Orders orders, Expert expert) {

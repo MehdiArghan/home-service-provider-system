@@ -1,7 +1,6 @@
 package com.example.homeserviceprovidersystem.dto.expertsuggestions;
 
 import com.example.homeserviceprovidersystem.base.BaseEntity;
-import com.example.homeserviceprovidersystem.dto.ordersDto.OrderSummaryDto;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -41,5 +40,4 @@ public class ExpertSuggestionsDto extends BaseEntity<Long> {
     @NotNull(message = "value is null")
     @Positive(message = "value proposedPrice must be positive")
     Integer durationOfWorkPerHour;
-    OrderSummaryDto orderSummaryDto;
 }

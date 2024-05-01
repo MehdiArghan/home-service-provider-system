@@ -1,8 +1,8 @@
 package com.example.homeserviceprovidersystem.controller;
 
-import com.example.homeserviceprovidersystem.dto.expertDto.ExpertSummaryDto;
 import com.example.homeserviceprovidersystem.dto.customerDto.CustomerDto;
 import com.example.homeserviceprovidersystem.dto.customerDto.CustomerDtoWithName;
+import com.example.homeserviceprovidersystem.dto.expertDto.ExpertSummaryDto;
 import com.example.homeserviceprovidersystem.dto.ordersDto.OrderSummaryDto;
 import com.example.homeserviceprovidersystem.dto.ordersDto.OrdersDto;
 import com.example.homeserviceprovidersystem.dto.subDutyDto.SubDutyDto;
@@ -43,14 +43,13 @@ public class CustomerController {
         return new ResponseEntity<>(savedCustomerDto, HttpStatus.CREATED);
     }
 
-    @PostMapping("/saveOrders/{customerId}/{expertId}/{subDutyId}")
+    @PostMapping("/saveOrders/{customerId}/{subDutyId}")
     public ResponseEntity<OrdersDto> saveOrders(
             @PathVariable Long customerId,
-            @PathVariable Long expertId,
             @PathVariable Long subDutyId,
             @Valid @RequestBody OrderSummaryDto orderSummaryDto) {
         Orders orders = ordersMapper.getOrderSummaryDtoToOrders(orderSummaryDto);
-        Orders savedOrders = ordersService.save(customerId, expertId, subDutyId, orders);
+        Orders savedOrders = ordersService.save(customerId, subDutyId, orders);
         return new ResponseEntity<>(ordersMapper.getOrdersToOrdersDto(savedOrders), HttpStatus.CREATED);
     }
 

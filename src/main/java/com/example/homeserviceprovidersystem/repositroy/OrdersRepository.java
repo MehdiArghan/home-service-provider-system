@@ -11,6 +11,9 @@ import java.util.List;
 
 @Repository
 public interface OrdersRepository extends JpaRepository<Orders, Long> {
-    @Query("from Orders order where order.expert.id=:ID and order.orderStatus =:ORDERSTATUS")
-    List<Orders> findAllOrdersByOrderStatus(@Param("ID") Long expertId, @Param("ORDERSTATUS") OrderStatus orderStatus);
+    @Query("from Orders order where order.subDuty.id=:SUBDUTYID and (order.orderStatus =:SUGGESTION or order.orderStatus =:SELECTION)")
+    List<Orders> findAllOrdersByOrderStatus(
+            @Param("SUBDUTYID") Long subDutyId,
+            @Param("SUGGESTION") OrderStatus suggestion,
+            @Param("SELECTION") OrderStatus selection);
 }
