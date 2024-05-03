@@ -8,4 +8,7 @@ public interface ExpertSuggestionsService {
     ExpertSuggestions save(Long expertId, Long ordersId, ExpertSuggestions expertSuggestions);
 
     List<ExpertSuggestions> findAllOrderSuggestions(Long customerId, Long subDutyId);
+    ExpertSuggestions findById(Long id);
+
+    ExpertSuggestions selectExpertSuggestion(Long customerId, Long expertSuggestionId);
 }

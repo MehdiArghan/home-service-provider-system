@@ -1,13 +1,16 @@
 package com.example.homeserviceprovidersystem.service.impl;
 
 import com.example.homeserviceprovidersystem.customeException.CustomBadRequestException;
+import com.example.homeserviceprovidersystem.customeException.CustomEntityNotFoundException;
 import com.example.homeserviceprovidersystem.customeException.CustomResourceNotFoundException;
+import com.example.homeserviceprovidersystem.entity.Customer;
 import com.example.homeserviceprovidersystem.entity.Expert;
 import com.example.homeserviceprovidersystem.entity.ExpertSuggestions;
 import com.example.homeserviceprovidersystem.entity.Orders;
 import com.example.homeserviceprovidersystem.entity.enums.OrderStatus;
 import com.example.homeserviceprovidersystem.repositroy.ExpertSuggestionsRepository;
 import com.example.homeserviceprovidersystem.repositroy.OrdersRepository;
+import com.example.homeserviceprovidersystem.service.CustomerService;
 import com.example.homeserviceprovidersystem.service.ExpertService;
 import com.example.homeserviceprovidersystem.service.ExpertSuggestionsService;
 import com.example.homeserviceprovidersystem.service.OrdersService;
@@ -24,18 +27,20 @@ public class ExpertSuggestionsImpl implements ExpertSuggestionsService {
     private final OrdersService ordersService;
     private final ExpertSuggestionsRepository expertSuggestionsRepository;
     private final OrdersRepository ordersRepository;
+    private final CustomerService customerService;
 
     @Autowired
     public ExpertSuggestionsImpl(
             ExpertService expertService,
             OrdersService ordersService,
             ExpertSuggestionsRepository expertSuggestionsRepository,
-            OrdersRepository ordersRepository
-    ) {
+            OrdersRepository ordersRepository,
+            CustomerService customerService) {
         this.expertService = expertService;
         this.ordersService = ordersService;
         this.expertSuggestionsRepository = expertSuggestionsRepository;
         this.ordersRepository = ordersRepository;
+        this.customerService = customerService;
     }
 
     @Override
@@ -89,5 +94,25 @@ public class ExpertSuggestionsImpl implements ExpertSuggestionsService {
         } else {
             return listOrderSuggestions;
         }
+    }
+
+    @Override
+    public ExpertSuggestions findById(Long id) {
+        return expertSuggestionsRepository.findById(id)
+                .orElseThrow(() -> new CustomEntityNotFoundException("expertSuggestion with this id was not found"));
+    }
+
+    @Override
+    public ExpertSuggestions selectExpertSuggestion(Long customerId, Long expertSuggestionId) {
+        Customer customer = customerService.findById(customerId);
+        ExpertSuggestions expertSuggestion = findById(expertSuggestionId);
+        Orders orders = expertSuggestion.getOrders();
+        if (!orders.getCustomer().getId().equals(customer.getId())) {
+            throw new CustomBadRequestException("expertSuggestion is not related to this customer");
+        }
+        orders.setOrderStatus(OrderStatus.ORDER_WAITING_FOR_SPECIALIST_TO_WORKPLACE);
+        orders.setExpert(expertSuggestion.getExpert());
+        ordersRepository.save(orders);
+        return expertSuggestion;
     }
 }

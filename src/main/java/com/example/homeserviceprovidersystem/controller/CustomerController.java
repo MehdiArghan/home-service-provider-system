@@ -50,6 +50,17 @@ public class CustomerController {
         return new ResponseEntity<>(ordersMapper.getOrdersToOrdersDto(savedOrders), HttpStatus.CREATED);
     }
 
+    @PostMapping(value = "/selectExpertSuggestion/{customerId}/{expertSuggestionId}")
+    public ResponseEntity<ExpertSuggestionsDto> selectExpertSuggestion(
+            @PathVariable Long customerId,
+            @PathVariable Long expertSuggestionId
+    ) {
+        ExpertSuggestionsDto suggestion =
+                expertSuggestionsMapper.getExpertSuggestionsToExpertSuggestionsDto
+                        (expertSuggestionsService.selectExpertSuggestion(customerId, expertSuggestionId));
+        return new ResponseEntity<>(suggestion, HttpStatus.OK);
+    }
+
     @GetMapping(value = "/findAllSubDuty")
     public ResponseEntity<List<SubDutyDto>> findAllSubDuty() {
         List<SubDutyDto> subDutyDtoList = subDutyService.findAll()
