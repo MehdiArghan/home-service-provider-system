@@ -1,32 +1,41 @@
 package com.example.homeserviceprovidersystem.service.impl;
 
 import com.example.homeserviceprovidersystem.customeException.CustomBadRequestException;
+import com.example.homeserviceprovidersystem.customeException.CustomResourceNotFoundException;
 import com.example.homeserviceprovidersystem.entity.Expert;
 import com.example.homeserviceprovidersystem.entity.ExpertSuggestions;
 import com.example.homeserviceprovidersystem.entity.Orders;
+import com.example.homeserviceprovidersystem.entity.enums.OrderStatus;
 import com.example.homeserviceprovidersystem.repositroy.ExpertSuggestionsRepository;
+import com.example.homeserviceprovidersystem.repositroy.OrdersRepository;
 import com.example.homeserviceprovidersystem.service.ExpertService;
 import com.example.homeserviceprovidersystem.service.ExpertSuggestionsService;
 import com.example.homeserviceprovidersystem.service.OrdersService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Service
 public class ExpertSuggestionsImpl implements ExpertSuggestionsService {
     private final ExpertService expertService;
     private final OrdersService ordersService;
     private final ExpertSuggestionsRepository expertSuggestionsRepository;
+    private final OrdersRepository ordersRepository;
 
+    @Autowired
     public ExpertSuggestionsImpl(
             ExpertService expertService,
             OrdersService ordersService,
-            ExpertSuggestionsRepository expertSuggestionsRepository
+            ExpertSuggestionsRepository expertSuggestionsRepository,
+            OrdersRepository ordersRepository
     ) {
         this.expertService = expertService;
         this.ordersService = ordersService;
         this.expertSuggestionsRepository = expertSuggestionsRepository;
+        this.ordersRepository = ordersRepository;
     }
 
     @Override
@@ -35,7 +44,9 @@ public class ExpertSuggestionsImpl implements ExpertSuggestionsService {
         Orders orders = ordersService.findById(ordersId);
         validateExpertSuggestions(expert, orders, expertSuggestions);
         setExpertSuggestionsDetails(expertSuggestions, orders, expert);
-        return expertSuggestionsRepository.save(expertSuggestions);
+        ExpertSuggestions saveExpertSuggestion = expertSuggestionsRepository.save(expertSuggestions);
+        updateOrdersStatus(orders);
+        return saveExpertSuggestion;
     }
 
     private void validateExpertSuggestions(
@@ -62,5 +73,21 @@ public class ExpertSuggestionsImpl implements ExpertSuggestionsService {
         expertSuggestionsDetails.setOfferTime(LocalTime.now());
         expertSuggestionsDetails.setOrders(orders);
         expertSuggestionsDetails.setExpert(expert);
+    }
+
+    private void updateOrdersStatus(Orders orders) {
+        orders.setOrderStatus(OrderStatus.ORDER_WAITING_FOR_SPECIALIST_SELECTION);
+        ordersRepository.save(orders);
+    }
+
+    @Override
+    public List<ExpertSuggestions> findAllOrderSuggestions(Long customerId, Long subDutyId) {
+        List<ExpertSuggestions> listOrderSuggestions =
+                expertSuggestionsRepository.findAllOrderSuggestions(customerId, subDutyId, OrderStatus.ORDER_WAITING_FOR_SPECIALIST_SELECTION);
+        if (listOrderSuggestions.isEmpty()) {
+            throw new CustomResourceNotFoundException("There is no result");
+        } else {
+            return listOrderSuggestions;
+        }
     }
 }
