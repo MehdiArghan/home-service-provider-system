@@ -68,4 +68,14 @@ public class OrdersServiceImpl implements OrdersService {
         return ordersRepository.findById(id)
                 .orElseThrow(() -> new CustomEntityNotFoundException("orders with this id was not found"));
     }
+
+    @Override
+    public List<Orders> findAllOrderWaitingForSpecialistToWorkPlace() {
+        List<Orders> findAllOrder = ordersRepository.findAllByOrderStatus(OrderStatus.ORDER_WAITING_FOR_SPECIALIST_TO_WORKPLACE);
+        if (findAllOrder.isEmpty()) {
+            throw new CustomResourceNotFoundException("There is no result");
+        } else {
+            return findAllOrder;
+        }
+    }
 }

@@ -10,4 +10,5 @@ public interface OrdersService {
     List<Orders> findAllOrderWaitingForSpecialistSuggestion(Long subDutyId);
 
     Orders findById(Long id);
+    List<Orders> findAllOrderWaitingForSpecialistToWorkPlace();
 }
