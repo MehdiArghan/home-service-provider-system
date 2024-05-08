@@ -1,6 +1,7 @@
 package com.example.homeserviceprovidersystem.controller;
 
 import com.example.homeserviceprovidersystem.dto.customer.CustomerRequest;
+import com.example.homeserviceprovidersystem.dto.customer.CustomerRequestWithEmail;
 import com.example.homeserviceprovidersystem.dto.customer.CustomerResponse;
 import com.example.homeserviceprovidersystem.dto.expert.ExpertSummaryResponse;
 import com.example.homeserviceprovidersystem.dto.expertsuggestion.ExpertSuggestionsRequest;
@@ -43,6 +44,11 @@ public class CustomerController {
         return new ResponseEntity<>(expertSuggestionsService.selectExpertSuggestion(request), HttpStatus.OK);
     }
 
+    @PatchMapping(value = "/selectStartWork")
+    public ResponseEntity<OrdersResponse> selectStartWork(@Valid @RequestBody OrderRequest request) {
+        return new ResponseEntity<>(ordersService.selectStartWork(request), HttpStatus.OK);
+    }
+
     @GetMapping(value = "/findAllSubDuty")
     public ResponseEntity<List<SubDutyResponse>> findAllSubDuty() {
         return new ResponseEntity<>(subDutyService.findAll(), HttpStatus.OK);
@@ -59,7 +65,7 @@ public class CustomerController {
     }
 
     @GetMapping(value = "/findAllOrderWaitingForSpecialistToWorkPlace")
-    public ResponseEntity<List<OrdersResponse>> findAllOrderWaitingForSpecialistToWorkPlace() {
-        return new ResponseEntity<>(ordersService.findAllOrderWaitingForSpecialistToWorkPlace(), HttpStatus.OK);
+    public ResponseEntity<List<OrdersResponse>> findAllOrderWaitingForSpecialistToWorkPlace(@Valid @RequestBody CustomerRequestWithEmail request) {
+        return new ResponseEntity<>(ordersService.findAllOrderWaitingForSpecialistToWorkPlace(request), HttpStatus.OK);
     }
 }

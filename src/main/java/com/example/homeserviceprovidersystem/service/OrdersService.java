@@ -1,5 +1,6 @@
 package com.example.homeserviceprovidersystem.service;
 
+import com.example.homeserviceprovidersystem.dto.customer.CustomerRequestWithEmail;
 import com.example.homeserviceprovidersystem.dto.order.OrderRequest;
 import com.example.homeserviceprovidersystem.dto.order.OrdersResponse;
 import com.example.homeserviceprovidersystem.dto.subduty.SubDutyRequestWithName;
@@ -14,7 +15,7 @@ public interface OrdersService {
 
     Orders findById(Long id);
 
-    List<OrdersResponse> findAllOrderWaitingForSpecialistToWorkPlace();
+    List<OrdersResponse> findAllOrderWaitingForSpecialistToWorkPlace(CustomerRequestWithEmail request);
 
-    /*Order selectStartWork(Long orderId);*/
+   OrdersResponse selectStartWork(OrderRequest request);
 }

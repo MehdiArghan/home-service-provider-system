@@ -78,7 +78,6 @@ public class ExpertSuggestionsImpl implements ExpertSuggestionsService {
         if (expertSuggestions.getTimeOfStartWork().isBefore(orders.getTimeOfWord())) {
             throw new CustomBadRequestException("Time of Start Work must be on or after the Time of work");
         }
-
     }
 
     private ExpertSuggestions setExpertSuggestionsDetails(ExpertSuggestionsSummaryRequest request, Orders orders, Expert expert) {

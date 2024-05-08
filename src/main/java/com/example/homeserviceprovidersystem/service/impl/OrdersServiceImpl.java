@@ -3,6 +3,7 @@ package com.example.homeserviceprovidersystem.service.impl;
 import com.example.homeserviceprovidersystem.customeException.CustomBadRequestException;
 import com.example.homeserviceprovidersystem.customeException.CustomEntityNotFoundException;
 import com.example.homeserviceprovidersystem.customeException.CustomResourceNotFoundException;
+import com.example.homeserviceprovidersystem.dto.customer.CustomerRequestWithEmail;
 import com.example.homeserviceprovidersystem.dto.order.AddressRequest;
 import com.example.homeserviceprovidersystem.dto.order.OrderRequest;
 import com.example.homeserviceprovidersystem.dto.order.OrdersResponse;
@@ -20,7 +21,10 @@ import com.example.homeserviceprovidersystem.service.SubDutyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrdersServiceImpl implements OrdersService {
@@ -96,17 +100,38 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
-    public List<OrdersResponse> findAllOrderWaitingForSpecialistToWorkPlace() {
-        List<Orders> findAllOrder = ordersRepository.findAllByOrderStatus(OrderStatus.ORDER_WAITING_FOR_SPECIALIST_TO_WORKPLACE);
+    public List<OrdersResponse> findAllOrderWaitingForSpecialistToWorkPlace(CustomerRequestWithEmail request) {
+        List<Orders> findAllOrder = ordersRepository.findAllByOrderStatusAndCustomerEmail
+                (OrderStatus.ORDER_WAITING_FOR_SPECIALIST_TO_WORKPLACE, request.getCustomerEmail());
         if (findAllOrder.isEmpty()) {
             throw new CustomResourceNotFoundException("There is no result");
         } else {
             return findAllOrder.stream().map(ordersMapper::orderToOrdersResponse).toList();
         }
     }
-/*
+
     @Override
-    public Order selectStartWork(Long orderId) {
-        ordersRepository.findById(orderId);
-    }*/
+    public OrdersResponse selectStartWork(OrderRequest request) {
+        Optional<Orders> findOrder = ordersRepository.findByOrderInformation(request.getSubDutyName(), request.getCustomerEmail(), request.getProposedPrice()
+                , request.getJobDescription(), request.getDateOfWork(), request.getTimeOfWord(), request.getAddress().getProvince(),
+                request.getAddress().getCity(), request.getAddress().getStreet(), request.getAddress().getPostalCode(),
+                OrderStatus.ORDER_WAITING_FOR_SPECIALIST_TO_WORKPLACE);
+        if (findOrder.isEmpty()) {
+            throw new CustomEntityNotFoundException("no order was found");
+        } else {
+            Orders order = findOrder.get();
+            validateOrder(order);
+            order.setOrderStatus(OrderStatus.ORDER_STARTED);
+            return ordersMapper.orderToOrdersResponse(ordersRepository.save(order));
+        }
+    }
+
+    private void validateOrder(Orders orders) {
+        if (LocalDate.now().isBefore(orders.getDateOfWork())) {
+            throw new CustomBadRequestException("Date of Start Work must be on or after the date of work");
+        }
+        if (LocalTime.now().isBefore(orders.getTimeOfWord())) {
+            throw new CustomBadRequestException("Time of Start Work must be on or after the Time of work");
+        }
+    }
 }
