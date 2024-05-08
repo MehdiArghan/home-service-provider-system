@@ -1,11 +1,7 @@
-package com.example.homeserviceprovidersystem.dto.ordersDto;
+package com.example.homeserviceprovidersystem.dto.order;
 
-import com.example.homeserviceprovidersystem.base.BaseEntity;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,7 +15,12 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @ToString
-public class OrderSummaryDto extends BaseEntity<Long> {
+public class OrderRequest {
+    @NotBlank(message = "please enter an appropriate nameSubDuty")
+    String subDutyName;
+    @NotNull(message = "email cannot be null")
+    @Email(message = "please enter an appropriate Email")
+    String customerEmail;
     @NotNull(message = "value is null")
     @Positive(message = "value proposedPrice must be positive")
     double ProposedPrice;
@@ -34,5 +35,5 @@ public class OrderSummaryDto extends BaseEntity<Long> {
     @NotNull(message = "Please enter an appropriate time")
     LocalTime TimeOfWord;
     @Valid
-    AddressDto address;
+    AddressRequest address;
 }

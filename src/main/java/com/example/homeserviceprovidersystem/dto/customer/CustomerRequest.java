@@ -1,6 +1,5 @@
-package com.example.homeserviceprovidersystem.dto.customerDto;
+package com.example.homeserviceprovidersystem.dto.customer;
 
-import com.example.homeserviceprovidersystem.base.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -12,7 +11,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @ToString
-public class CustomerDtoWithName extends BaseEntity<Long> {
+public class CustomerRequest {
     @NotNull(message = "firstName cannot be null")
     @NotEmpty(message = "firstName cannot be empty")
     @Column(nullable = false)

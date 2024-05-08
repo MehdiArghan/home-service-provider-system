@@ -1,4 +1,4 @@
-package com.example.homeserviceprovidersystem.dto.ordersDto;
+package com.example.homeserviceprovidersystem.dto.order;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -10,7 +10,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @ToString
-public class AddressDto {
+public class AddressRequest {
     @NotBlank(message = "Please enter the name of your province")
     String province;
     @NotBlank(message = "Please enter the name of your city")

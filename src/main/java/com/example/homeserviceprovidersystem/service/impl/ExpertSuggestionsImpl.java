@@ -3,11 +3,16 @@ package com.example.homeserviceprovidersystem.service.impl;
 import com.example.homeserviceprovidersystem.customeException.CustomBadRequestException;
 import com.example.homeserviceprovidersystem.customeException.CustomEntityNotFoundException;
 import com.example.homeserviceprovidersystem.customeException.CustomResourceNotFoundException;
+import com.example.homeserviceprovidersystem.dto.expertsuggestion.ExpertSuggestionsRequest;
+import com.example.homeserviceprovidersystem.dto.expertsuggestion.ExpertSuggestionsRequestWithId;
+import com.example.homeserviceprovidersystem.dto.expertsuggestion.ExpertSuggestionsResponse;
+import com.example.homeserviceprovidersystem.dto.expertsuggestion.ExpertSuggestionsSummaryRequest;
 import com.example.homeserviceprovidersystem.entity.Customer;
 import com.example.homeserviceprovidersystem.entity.Expert;
 import com.example.homeserviceprovidersystem.entity.ExpertSuggestions;
 import com.example.homeserviceprovidersystem.entity.Orders;
 import com.example.homeserviceprovidersystem.entity.enums.OrderStatus;
+import com.example.homeserviceprovidersystem.mapper.ExpertSuggestionsMapper;
 import com.example.homeserviceprovidersystem.repositroy.ExpertSuggestionsRepository;
 import com.example.homeserviceprovidersystem.repositroy.OrdersRepository;
 import com.example.homeserviceprovidersystem.service.CustomerService;
@@ -28,6 +33,7 @@ public class ExpertSuggestionsImpl implements ExpertSuggestionsService {
     private final ExpertSuggestionsRepository expertSuggestionsRepository;
     private final OrdersRepository ordersRepository;
     private final CustomerService customerService;
+    private final ExpertSuggestionsMapper expertSuggestionsMapper;
 
     @Autowired
     public ExpertSuggestionsImpl(
@@ -35,29 +41,31 @@ public class ExpertSuggestionsImpl implements ExpertSuggestionsService {
             OrdersService ordersService,
             ExpertSuggestionsRepository expertSuggestionsRepository,
             OrdersRepository ordersRepository,
-            CustomerService customerService) {
+            CustomerService customerService,
+            ExpertSuggestionsMapper expertSuggestionsMapper) {
         this.expertService = expertService;
         this.ordersService = ordersService;
         this.expertSuggestionsRepository = expertSuggestionsRepository;
         this.ordersRepository = ordersRepository;
         this.customerService = customerService;
+        this.expertSuggestionsMapper = expertSuggestionsMapper;
     }
 
     @Override
-    public ExpertSuggestions save(Long expertId, Long ordersId, ExpertSuggestions expertSuggestions) {
-        Expert expert = expertService.findById(expertId);
-        Orders orders = ordersService.findById(ordersId);
-        validateExpertSuggestions(expert, orders, expertSuggestions);
-        setExpertSuggestionsDetails(expertSuggestions, orders, expert);
+    public ExpertSuggestionsResponse save(ExpertSuggestionsSummaryRequest request) {
+        Expert expert = expertService.findByEmail(request.getExpertEmail());
+        Orders orders = ordersService.findById(request.getOrderId());
+        validateExpertSuggestions(expert, orders, request);
+        ExpertSuggestions expertSuggestions = setExpertSuggestionsDetails(request, orders, expert);
         ExpertSuggestions saveExpertSuggestion = expertSuggestionsRepository.save(expertSuggestions);
         updateOrdersStatus(orders);
-        return saveExpertSuggestion;
+        return expertSuggestionsMapper.expertSuggestionToExpertSuggestionsResponse(saveExpertSuggestion);
     }
 
     private void validateExpertSuggestions(
             Expert expert,
             Orders orders,
-            ExpertSuggestions expertSuggestions) {
+            ExpertSuggestionsSummaryRequest expertSuggestions) {
 
         if (expert.getSubDuties().stream().noneMatch(subDuty -> orders.getSubDuty().getName().equals(subDuty.getName())) ||
                 orders.getSubDuty().getBasePrice() > expertSuggestions.getProposedPrice()) {
@@ -73,11 +81,17 @@ public class ExpertSuggestionsImpl implements ExpertSuggestionsService {
 
     }
 
-    private void setExpertSuggestionsDetails(ExpertSuggestions expertSuggestionsDetails, Orders orders, Expert expert) {
-        expertSuggestionsDetails.setOfferDate(LocalDate.now());
-        expertSuggestionsDetails.setOfferTime(LocalTime.now());
-        expertSuggestionsDetails.setOrders(orders);
-        expertSuggestionsDetails.setExpert(expert);
+    private ExpertSuggestions setExpertSuggestionsDetails(ExpertSuggestionsSummaryRequest request, Orders orders, Expert expert) {
+        ExpertSuggestions suggestions = new ExpertSuggestions();
+        suggestions.setProposedPrice(request.getProposedPrice());
+        suggestions.setOfferDate(LocalDate.now());
+        suggestions.setOfferTime(LocalTime.now());
+        suggestions.setTimeOfStartWork(request.getTimeOfStartWork());
+        suggestions.setDateOfStartWork(request.getDateOfStartWork());
+        suggestions.setDurationOfWorkPerHour(request.getDurationOfWorkPerHour());
+        suggestions.setOrders(orders);
+        suggestions.setExpert(expert);
+        return suggestions;
     }
 
     private void updateOrdersStatus(Orders orders) {
@@ -86,13 +100,14 @@ public class ExpertSuggestionsImpl implements ExpertSuggestionsService {
     }
 
     @Override
-    public List<ExpertSuggestions> findAllOrderSuggestions(Long customerId, Long subDutyId) {
+    public List<ExpertSuggestionsResponse> findAllOrderSuggestions(ExpertSuggestionsRequest request) {
         List<ExpertSuggestions> listOrderSuggestions =
-                expertSuggestionsRepository.findAllOrderSuggestions(customerId, subDutyId, OrderStatus.ORDER_WAITING_FOR_SPECIALIST_SELECTION);
+                expertSuggestionsRepository.findAllOrderSuggestions(request.getCustomerEmail(), request.getSubDutyName(), OrderStatus.ORDER_WAITING_FOR_SPECIALIST_SELECTION);
         if (listOrderSuggestions.isEmpty()) {
             throw new CustomResourceNotFoundException("There is no result");
         } else {
-            return listOrderSuggestions;
+            return listOrderSuggestions.stream()
+                    .map(expertSuggestionsMapper::expertSuggestionToExpertSuggestionsResponse).toList();
         }
     }
 
@@ -103,9 +118,9 @@ public class ExpertSuggestionsImpl implements ExpertSuggestionsService {
     }
 
     @Override
-    public ExpertSuggestions selectExpertSuggestion(Long customerId, Long expertSuggestionId) {
-        Customer customer = customerService.findById(customerId);
-        ExpertSuggestions expertSuggestion = findById(expertSuggestionId);
+    public ExpertSuggestionsResponse selectExpertSuggestion(ExpertSuggestionsRequestWithId request) {
+        Customer customer = customerService.findByEmail(request.getCustomerEmail());
+        ExpertSuggestions expertSuggestion = findById(request.getExpertSuggestionId());
         Orders orders = expertSuggestion.getOrders();
         if (!orders.getCustomer().getId().equals(customer.getId())) {
             throw new CustomBadRequestException("expertSuggestion is not related to this customer");
@@ -113,6 +128,6 @@ public class ExpertSuggestionsImpl implements ExpertSuggestionsService {
         orders.setOrderStatus(OrderStatus.ORDER_WAITING_FOR_SPECIALIST_TO_WORKPLACE);
         orders.setExpert(expertSuggestion.getExpert());
         ordersRepository.save(orders);
-        return expertSuggestion;
+        return expertSuggestionsMapper.expertSuggestionToExpertSuggestionsResponse(expertSuggestion);
     }
 }

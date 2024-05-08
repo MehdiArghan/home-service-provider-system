@@ -1,9 +1,6 @@
-package com.example.homeserviceprovidersystem.dto.ordersDto;
+package com.example.homeserviceprovidersystem.dto.order;
 
 import com.example.homeserviceprovidersystem.base.BaseEntity;
-import com.example.homeserviceprovidersystem.entity.Customer;
-import com.example.homeserviceprovidersystem.entity.Expert;
-import com.example.homeserviceprovidersystem.entity.SubDuty;
 import com.example.homeserviceprovidersystem.entity.enums.OrderStatus;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.FutureOrPresent;
@@ -23,7 +20,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @ToString
-public class OrdersDto extends BaseEntity<Long> {
+public class OrdersResponse extends BaseEntity<Long> {
     @NotNull(message = "value is null")
     @Positive(message = "value proposedPrice must be positive")
     double ProposedPrice;
@@ -38,10 +35,8 @@ public class OrdersDto extends BaseEntity<Long> {
     @NotNull(message = "Please enter an appropriate time")
     LocalTime TimeOfWord;
     @Valid
-    AddressDto address;
-    @NotBlank(message = "please enter an appropriate orderStatus")
+    AddressResponse address;
     OrderStatus orderStatus;
-    Customer customer;
-    Expert expert;
-    SubDuty subDuty;
+    @NotBlank(message = "please enter an appropriate nameSubDuty")
+    String subDutyName;
 }

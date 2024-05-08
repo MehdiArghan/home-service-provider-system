@@ -1,14 +1,20 @@
 package com.example.homeserviceprovidersystem.service;
 
+import com.example.homeserviceprovidersystem.dto.order.OrderRequest;
+import com.example.homeserviceprovidersystem.dto.order.OrdersResponse;
+import com.example.homeserviceprovidersystem.dto.subduty.SubDutyRequestWithName;
 import com.example.homeserviceprovidersystem.entity.Orders;
 
 import java.util.List;
 
 public interface OrdersService {
-    Orders save(Long customerId, Long subDutyId, Orders orders);
+    OrdersResponse save(OrderRequest request);
 
-    List<Orders> findAllOrderWaitingForSpecialistSuggestion(Long subDutyId);
+    List<OrdersResponse> findAllOrderWaitingForSpecialistSuggestion(SubDutyRequestWithName request);
 
     Orders findById(Long id);
-    List<Orders> findAllOrderWaitingForSpecialistToWorkPlace();
+
+    List<OrdersResponse> findAllOrderWaitingForSpecialistToWorkPlace();
+
+    /*Order selectStartWork(Long orderId);*/
 }

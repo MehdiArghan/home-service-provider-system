@@ -1,4 +1,4 @@
-package com.example.homeserviceprovidersystem.dto.subDutyDto;
+package com.example.homeserviceprovidersystem.dto.subduty;
 
 import com.example.homeserviceprovidersystem.base.BaseEntity;
 import com.example.homeserviceprovidersystem.entity.Duty;
@@ -14,7 +14,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class SubDutyDto extends BaseEntity<Long> {
+public class SubDutyResponse extends BaseEntity<Long> {
     @NotBlank(message = "please enter an appropriate name")
     String name;
     @NotNull(message = "please enter an appropriate price")

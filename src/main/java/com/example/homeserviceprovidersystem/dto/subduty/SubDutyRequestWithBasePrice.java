@@ -1,6 +1,6 @@
-package com.example.homeserviceprovidersystem.dto.subDutyDto;
+package com.example.homeserviceprovidersystem.dto.subduty;
 
-import com.example.homeserviceprovidersystem.base.BaseEntity;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.*;
@@ -12,7 +12,9 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class SubDutyDtoWithBasePrice extends BaseEntity<Long> {
+public class SubDutyRequestWithBasePrice {
+    @NotBlank(message = "please enter the appropriate nameSubDuty")
+    String nameSubDuty;
     @NotNull(message = "please enter the appropriate price")
     @Positive(message = "please enter a positive price")
     double basePrice;

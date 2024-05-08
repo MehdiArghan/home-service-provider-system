@@ -1,14 +1,19 @@
 package com.example.homeserviceprovidersystem.service;
 
+import com.example.homeserviceprovidersystem.dto.expertsuggestion.ExpertSuggestionsRequest;
+import com.example.homeserviceprovidersystem.dto.expertsuggestion.ExpertSuggestionsRequestWithId;
+import com.example.homeserviceprovidersystem.dto.expertsuggestion.ExpertSuggestionsResponse;
+import com.example.homeserviceprovidersystem.dto.expertsuggestion.ExpertSuggestionsSummaryRequest;
 import com.example.homeserviceprovidersystem.entity.ExpertSuggestions;
 
 import java.util.List;
 
 public interface ExpertSuggestionsService {
-    ExpertSuggestions save(Long expertId, Long ordersId, ExpertSuggestions expertSuggestions);
+    ExpertSuggestionsResponse save(ExpertSuggestionsSummaryRequest request);
 
-    List<ExpertSuggestions> findAllOrderSuggestions(Long customerId, Long subDutyId);
+    List<ExpertSuggestionsResponse> findAllOrderSuggestions(ExpertSuggestionsRequest request);
+
     ExpertSuggestions findById(Long id);
 
-    ExpertSuggestions selectExpertSuggestion(Long customerId, Long expertSuggestionId);
+    ExpertSuggestionsResponse selectExpertSuggestion(ExpertSuggestionsRequestWithId request);
 }

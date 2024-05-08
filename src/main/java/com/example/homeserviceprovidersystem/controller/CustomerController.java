@@ -1,14 +1,14 @@
 package com.example.homeserviceprovidersystem.controller;
 
-import com.example.homeserviceprovidersystem.dto.customerDto.CustomerDto;
-import com.example.homeserviceprovidersystem.dto.customerDto.CustomerDtoWithName;
-import com.example.homeserviceprovidersystem.dto.expertDto.ExpertSummaryDto;
-import com.example.homeserviceprovidersystem.dto.expertsuggestions.ExpertSuggestionsDto;
-import com.example.homeserviceprovidersystem.dto.ordersDto.OrderSummaryDto;
-import com.example.homeserviceprovidersystem.dto.ordersDto.OrdersDto;
-import com.example.homeserviceprovidersystem.dto.subDutyDto.SubDutyDto;
-import com.example.homeserviceprovidersystem.entity.Orders;
-import com.example.homeserviceprovidersystem.mapper.*;
+import com.example.homeserviceprovidersystem.dto.customer.CustomerRequest;
+import com.example.homeserviceprovidersystem.dto.customer.CustomerResponse;
+import com.example.homeserviceprovidersystem.dto.expert.ExpertSummaryResponse;
+import com.example.homeserviceprovidersystem.dto.expertsuggestion.ExpertSuggestionsRequest;
+import com.example.homeserviceprovidersystem.dto.expertsuggestion.ExpertSuggestionsRequestWithId;
+import com.example.homeserviceprovidersystem.dto.expertsuggestion.ExpertSuggestionsResponse;
+import com.example.homeserviceprovidersystem.dto.order.OrderRequest;
+import com.example.homeserviceprovidersystem.dto.order.OrdersResponse;
+import com.example.homeserviceprovidersystem.dto.subduty.SubDutyResponse;
 import com.example.homeserviceprovidersystem.service.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,66 +22,44 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(value = "/customer")
 public class CustomerController {
-    final CustomerMapper customerMapper;
     final CustomerService customerService;
-    final SubDutyMapper subDutyMapper;
-    final SubDutyService subDutyService;
-    final OrdersMapper ordersMapper;
     final OrdersService ordersService;
+    final SubDutyService subDutyService;
     final ExpertService expertService;
-    final ExpertMapper expertMapper;
     final ExpertSuggestionsService expertSuggestionsService;
-    final ExpertSuggestionsMapper expertSuggestionsMapper;
 
     @PostMapping("/addCustomer")
-    public ResponseEntity<CustomerDto> saveCustomer(@Valid @RequestBody CustomerDtoWithName customerDtoWithName) {
-        CustomerDto savedCustomerDto = customerMapper.getCustomerToCustomerDto
-                (customerService.save(customerMapper.getCustomerDtoWithNameToCustomer(customerDtoWithName)));
-        return new ResponseEntity<>(savedCustomerDto, HttpStatus.CREATED);
+    public ResponseEntity<CustomerResponse> saveCustomer(@Valid @RequestBody CustomerRequest request) {
+        return new ResponseEntity<>(customerService.save(request), HttpStatus.CREATED);
     }
 
-    @PostMapping("/saveOrders/{customerId}/{subDutyId}")
-    public ResponseEntity<OrdersDto> saveOrders(
-            @PathVariable Long customerId,
-            @PathVariable Long subDutyId,
-            @Valid @RequestBody OrderSummaryDto orderSummaryDto) {
-        Orders orders = ordersMapper.getOrderSummaryDtoToOrders(orderSummaryDto);
-        Orders savedOrders = ordersService.save(customerId, subDutyId, orders);
-        return new ResponseEntity<>(ordersMapper.getOrdersToOrdersDto(savedOrders), HttpStatus.CREATED);
+    @PostMapping("/saveOrders")
+    public ResponseEntity<OrdersResponse> saveOrders(@Valid @RequestBody OrderRequest request) {
+        return new ResponseEntity<>(ordersService.save(request), HttpStatus.CREATED);
     }
 
-    @PostMapping(value = "/selectExpertSuggestion/{customerId}/{expertSuggestionId}")
-    public ResponseEntity<ExpertSuggestionsDto> selectExpertSuggestion(
-            @PathVariable Long customerId,
-            @PathVariable Long expertSuggestionId
-    ) {
-        ExpertSuggestionsDto suggestion =
-                expertSuggestionsMapper.getExpertSuggestionsToExpertSuggestionsDto
-                        (expertSuggestionsService.selectExpertSuggestion(customerId, expertSuggestionId));
-        return new ResponseEntity<>(suggestion, HttpStatus.OK);
+    @PostMapping(value = "/selectExpertSuggestion")
+    public ResponseEntity<ExpertSuggestionsResponse> selectExpertSuggestion(@Valid @RequestBody ExpertSuggestionsRequestWithId request) {
+        return new ResponseEntity<>(expertSuggestionsService.selectExpertSuggestion(request), HttpStatus.OK);
     }
 
     @GetMapping(value = "/findAllSubDuty")
-    public ResponseEntity<List<SubDutyDto>> findAllSubDuty() {
-        List<SubDutyDto> subDutyDtoList = subDutyService.findAll()
-                .stream().map(subDutyMapper::getSubDutyToSubDutyDto).toList();
-        return new ResponseEntity<>(subDutyDtoList, HttpStatus.FOUND);
+    public ResponseEntity<List<SubDutyResponse>> findAllSubDuty() {
+        return new ResponseEntity<>(subDutyService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/findAllExpert")
-    public ResponseEntity<List<ExpertSummaryDto>> findAllExpert() {
-        List<ExpertSummaryDto> expertSummaryDto =
-                expertService.findAll().stream().map(expertMapper::getExpertToExpertSummaryDto).toList();
-        return new ResponseEntity<>(expertSummaryDto, HttpStatus.FOUND);
+    public ResponseEntity<List<ExpertSummaryResponse>> findAllExpert() {
+        return new ResponseEntity<>(expertService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/findAllOrderSuggestions/{customerId}/{subDutyId}")
-    public ResponseEntity<List<ExpertSuggestionsDto>> findAllOrderSuggestions(
-            @PathVariable Long customerId,
-            @PathVariable Long subDutyId
-    ) {
-        List<ExpertSuggestionsDto> expertSuggestionsDto = expertSuggestionsService.findAllOrderSuggestions(customerId, subDutyId).stream()
-                .map(expertSuggestionsMapper::getExpertSuggestionsToExpertSuggestionsDto).toList();
-        return new ResponseEntity<>(expertSuggestionsDto, HttpStatus.FOUND);
+    @GetMapping(value = "/findAllOrderSuggestions")
+    public ResponseEntity<List<ExpertSuggestionsResponse>> findAllOrderSuggestions(@Valid @RequestBody ExpertSuggestionsRequest request) {
+        return new ResponseEntity<>(expertSuggestionsService.findAllOrderSuggestions(request), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/findAllOrderWaitingForSpecialistToWorkPlace")
+    public ResponseEntity<List<OrdersResponse>> findAllOrderWaitingForSpecialistToWorkPlace() {
+        return new ResponseEntity<>(ordersService.findAllOrderWaitingForSpecialistToWorkPlace(), HttpStatus.OK);
     }
 }

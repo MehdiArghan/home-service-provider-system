@@ -1,6 +1,6 @@
-package com.example.homeserviceprovidersystem.dto.expertsuggestions;
+package com.example.homeserviceprovidersystem.dto.expertsuggestion;
 
-import com.example.homeserviceprovidersystem.base.BaseEntity;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -17,7 +17,13 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @ToString
-public class ExpertSuggestionsSummaryDto extends BaseEntity<Long> {
+public class ExpertSuggestionsSummaryRequest {
+    @NotNull(message = "value is null")
+    @Positive(message = "value proposedPrice must be positive")
+    Long orderId;
+    @NotNull(message = "email cannot be null")
+    @Email(message = "please enter an appropriate Email")
+    String expertEmail;
     @NotNull(message = "value is null")
     @Positive(message = "value proposedPrice must be positive")
     double ProposedPrice;

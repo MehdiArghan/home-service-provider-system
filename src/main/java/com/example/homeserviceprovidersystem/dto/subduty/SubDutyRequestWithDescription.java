@@ -1,6 +1,5 @@
-package com.example.homeserviceprovidersystem.dto.subDutyDto;
+package com.example.homeserviceprovidersystem.dto.subduty;
 
-import com.example.homeserviceprovidersystem.base.BaseEntity;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -11,7 +10,9 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class SubDutyDtoWithDescription extends BaseEntity<Long> {
+public class SubDutyRequestWithDescription {
+    @NotBlank(message = "please enter the appropriate nameSubDuty")
+    String nameSubDuty;
     @NotBlank(message = "please enter the appropriate description")
     String description;
 }

@@ -12,12 +12,12 @@ import java.util.List;
 @Repository
 public interface ExpertSuggestionsRepository extends JpaRepository<ExpertSuggestions, Long> {
     @Query("from ExpertSuggestions es where" +
-            " es.orders.customer.id =:CUSTOMERID and" +
-            " es.orders.subDuty.id =:SUBDUTYID and" +
+            " es.orders.customer.email =:CUSTOMEREMAIL and" +
+            " es.orders.subDuty.name =:SUBDUTYNAME and" +
             " es.orders.orderStatus =:SELECTION" +
             " order by es.ProposedPrice asc")
     List<ExpertSuggestions> findAllOrderSuggestions(
-            @Param("CUSTOMERID") Long customerId,
-            @Param("SUBDUTYID") Long subDutyId,
+            @Param("CUSTOMEREMAIL") String customerEmail,
+            @Param("SUBDUTYNAME") String subDutyName,
             @Param("SELECTION") OrderStatus orderStatus);
 }

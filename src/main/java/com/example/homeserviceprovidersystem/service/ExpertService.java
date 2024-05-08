@@ -1,19 +1,23 @@
 package com.example.homeserviceprovidersystem.service;
 
-import com.example.homeserviceprovidersystem.dto.expertDto.ExpertDto;
+import com.example.homeserviceprovidersystem.dto.expert.ExpertRequest;
+import com.example.homeserviceprovidersystem.dto.expert.ExpertRequestWithEmail;
+import com.example.homeserviceprovidersystem.dto.expert.ExpertSummaryResponse;
 import com.example.homeserviceprovidersystem.entity.Expert;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface ExpertService {
-    Expert save(Long idSubDuty, MultipartFile multipartFile, ExpertDto expertDto);
+    ExpertSummaryResponse save(MultipartFile multipartFile, ExpertRequest request);
 
-    List<Expert> findAllDisableExperts();
+    List<ExpertSummaryResponse> findAllDisableExperts();
 
-    Expert expertConfirmation(Long id);
+    ExpertSummaryResponse expertConfirmation(ExpertRequestWithEmail request);
 
     Expert findById(Long id);
 
-    List<Expert> findAll();
+    Expert findByEmail(String email);
+
+    List<ExpertSummaryResponse> findAll();
 }

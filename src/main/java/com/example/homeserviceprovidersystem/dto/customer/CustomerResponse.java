@@ -1,6 +1,6 @@
-package com.example.homeserviceprovidersystem.dto.customerDto;
+package com.example.homeserviceprovidersystem.dto.customer;
 
-import com.example.homeserviceprovidersystem.dto.personDto.PersonDto;
+import com.example.homeserviceprovidersystem.dto.person.PersonResponse;
 import com.example.homeserviceprovidersystem.entity.Wallet;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -11,6 +11,6 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @ToString
-public class CustomerDto extends PersonDto {
+public class CustomerResponse extends PersonResponse {
     Wallet wallet;
 }

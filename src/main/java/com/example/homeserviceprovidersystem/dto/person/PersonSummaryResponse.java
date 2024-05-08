@@ -1,8 +1,11 @@
-package com.example.homeserviceprovidersystem.dto.personDto;
+package com.example.homeserviceprovidersystem.dto.person;
 
 import com.example.homeserviceprovidersystem.base.BaseEntity;
 import jakarta.persistence.Column;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -16,7 +19,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @ToString
-public class PersonDto extends BaseEntity<Long> {
+public class PersonSummaryResponse extends BaseEntity<Long> {
     @NotNull(message = "firstName cannot be null")
     @NotEmpty(message = "firstName cannot be empty")
     @Column(nullable = false)
@@ -29,10 +32,6 @@ public class PersonDto extends BaseEntity<Long> {
     @Email(message = "please enter an appropriate Email")
     @Column(unique = true)
     String email;
-    @NotBlank(message = "please enter an appropriate password")
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d).{8,}$",
-            message = "Password must be at least 8 characters long and contain at least one letter and one number")
-    String password;
     @PastOrPresent(message = "date should not be in the past")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Please enter the appropriate date")
@@ -41,11 +40,4 @@ public class PersonDto extends BaseEntity<Long> {
     @DateTimeFormat(pattern = "HH:mm:ss")
     @NotNull(message = "Please enter an appropriate time")
     LocalTime registrationTime;
-
-    public PersonDto(String firstName, String lastName, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-    }
 }
