@@ -2,6 +2,7 @@ package com.example.homeserviceprovidersystem.service;
 
 import com.example.homeserviceprovidersystem.dto.customer.CustomerRequestWithEmail;
 import com.example.homeserviceprovidersystem.dto.order.OrderRequest;
+import com.example.homeserviceprovidersystem.dto.order.OrderSummaryRequest;
 import com.example.homeserviceprovidersystem.dto.order.OrdersResponse;
 import com.example.homeserviceprovidersystem.dto.subduty.SubDutyRequestWithName;
 import com.example.homeserviceprovidersystem.entity.Orders;
@@ -17,5 +18,5 @@ public interface OrdersService {
 
     List<OrdersResponse> findAllOrderWaitingForSpecialistToWorkPlace(CustomerRequestWithEmail request);
 
-   OrdersResponse selectStartWork(OrderRequest request);
+   OrdersResponse selectStartWork(OrderSummaryRequest request);
 }

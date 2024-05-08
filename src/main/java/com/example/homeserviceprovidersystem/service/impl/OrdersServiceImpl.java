@@ -6,6 +6,7 @@ import com.example.homeserviceprovidersystem.customeException.CustomResourceNotF
 import com.example.homeserviceprovidersystem.dto.customer.CustomerRequestWithEmail;
 import com.example.homeserviceprovidersystem.dto.order.AddressRequest;
 import com.example.homeserviceprovidersystem.dto.order.OrderRequest;
+import com.example.homeserviceprovidersystem.dto.order.OrderSummaryRequest;
 import com.example.homeserviceprovidersystem.dto.order.OrdersResponse;
 import com.example.homeserviceprovidersystem.dto.subduty.SubDutyRequestWithName;
 import com.example.homeserviceprovidersystem.entity.Address;
@@ -111,7 +112,7 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
-    public OrdersResponse selectStartWork(OrderRequest request) {
+    public OrdersResponse selectStartWork(OrderSummaryRequest request) {
         Optional<Orders> findOrder = ordersRepository.findByOrderInformation(request.getSubDutyName(), request.getCustomerEmail(), request.getProposedPrice()
                 , request.getJobDescription(), request.getDateOfWork(), request.getTimeOfWord(), request.getAddress().getProvince(),
                 request.getAddress().getCity(), request.getAddress().getStreet(), request.getAddress().getPostalCode(),

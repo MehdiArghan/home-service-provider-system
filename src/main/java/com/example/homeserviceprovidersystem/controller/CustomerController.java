@@ -8,6 +8,7 @@ import com.example.homeserviceprovidersystem.dto.expertsuggestion.ExpertSuggesti
 import com.example.homeserviceprovidersystem.dto.expertsuggestion.ExpertSuggestionsRequestWithId;
 import com.example.homeserviceprovidersystem.dto.expertsuggestion.ExpertSuggestionsResponse;
 import com.example.homeserviceprovidersystem.dto.order.OrderRequest;
+import com.example.homeserviceprovidersystem.dto.order.OrderSummaryRequest;
 import com.example.homeserviceprovidersystem.dto.order.OrdersResponse;
 import com.example.homeserviceprovidersystem.dto.subduty.SubDutyResponse;
 import com.example.homeserviceprovidersystem.service.*;
@@ -45,7 +46,7 @@ public class CustomerController {
     }
 
     @PatchMapping(value = "/selectStartWork")
-    public ResponseEntity<OrdersResponse> selectStartWork(@Valid @RequestBody OrderRequest request) {
+    public ResponseEntity<OrdersResponse> selectStartWork(@Valid @RequestBody OrderSummaryRequest request) {
         return new ResponseEntity<>(ordersService.selectStartWork(request), HttpStatus.OK);
     }
 

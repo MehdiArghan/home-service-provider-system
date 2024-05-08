@@ -124,6 +124,9 @@ public class ExpertSuggestionsImpl implements ExpertSuggestionsService {
         if (!orders.getCustomer().getId().equals(customer.getId())) {
             throw new CustomBadRequestException("expertSuggestion is not related to this customer");
         }
+        if (orders.getOrderStatus().equals(OrderStatus.ORDER_WAITING_FOR_SPECIALIST_TO_WORKPLACE)) {
+            throw new CustomBadRequestException("It is not possible to select this order");
+        }
         orders.setOrderStatus(OrderStatus.ORDER_WAITING_FOR_SPECIALIST_TO_WORKPLACE);
         orders.setExpert(expertSuggestion.getExpert());
         ordersRepository.save(orders);
