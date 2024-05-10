@@ -1,4 +1,4 @@
-package com.example.homeserviceprovidersystem.dto.order;
+package com.example.homeserviceprovidersystem.dto.address;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;

@@ -4,7 +4,7 @@ import com.example.homeserviceprovidersystem.customeException.CustomBadRequestEx
 import com.example.homeserviceprovidersystem.customeException.CustomEntityNotFoundException;
 import com.example.homeserviceprovidersystem.customeException.CustomResourceNotFoundException;
 import com.example.homeserviceprovidersystem.dto.customer.CustomerRequestWithEmail;
-import com.example.homeserviceprovidersystem.dto.order.AddressRequest;
+import com.example.homeserviceprovidersystem.dto.address.AddressRequest;
 import com.example.homeserviceprovidersystem.dto.order.OrderRequest;
 import com.example.homeserviceprovidersystem.dto.order.OrderSummaryRequest;
 import com.example.homeserviceprovidersystem.dto.order.OrdersResponse;

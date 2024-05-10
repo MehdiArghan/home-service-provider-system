@@ -1,6 +1,7 @@
 package com.example.homeserviceprovidersystem.dto.order;
 
 import com.example.homeserviceprovidersystem.base.BaseEntity;
+import com.example.homeserviceprovidersystem.dto.address.AddressResponse;
 import com.example.homeserviceprovidersystem.entity.enums.OrderStatus;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.FutureOrPresent;
