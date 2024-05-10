@@ -52,6 +52,7 @@ public class ExpertServiceImpl implements ExpertService {
     @Override
     public ExpertSummaryResponse save(MultipartFile multipartFile, ExpertRequest request) {
         validateRequest(request);
+        validateMultiPartFile(multipartFile);
         expertRepository.findByEmail(request.getEmail()).ifPresent(existingExpert -> {
             throw new CustomBadRequestException("Email already exists");
         });
@@ -65,6 +66,16 @@ public class ExpertServiceImpl implements ExpertService {
         if (!violations.isEmpty()) {
             List<String> errorMessages = violations.stream().map(ConstraintViolation::getMessage).toList();
             throw new CustomBadRequestException(String.join(",", errorMessages));
+        }
+    }
+
+    private void validateMultiPartFile(MultipartFile multipartFile) {
+        if (multipartFile.getSize() > 300 * 1024) {
+            throw new CustomBadRequestException("File size exceeds the maximum limit of 300 KB");
+        }
+        String fileName = multipartFile.getOriginalFilename();
+        if (fileName != null && !fileName.toLowerCase().endsWith(".jpg")) {
+            throw new CustomBadRequestException("File format must be JPG");
         }
     }
 
