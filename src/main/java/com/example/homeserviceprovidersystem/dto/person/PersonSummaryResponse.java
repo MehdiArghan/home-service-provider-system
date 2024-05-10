@@ -2,10 +2,7 @@ package com.example.homeserviceprovidersystem.dto.person;
 
 import com.example.homeserviceprovidersystem.base.BaseEntity;
 import jakarta.persistence.Column;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,10 +19,12 @@ import java.time.LocalTime;
 public class PersonSummaryResponse extends BaseEntity<Long> {
     @NotNull(message = "firstName cannot be null")
     @NotEmpty(message = "firstName cannot be empty")
+    @Pattern(regexp = "[a-zA-Z]+", message = "firstName must contain only letters")
     @Column(nullable = false)
     String firstName;
     @NotNull(message = "lastName cannot be null")
     @NotEmpty(message = "lastName cannot be empty")
+    @Pattern(regexp = "[a-zA-Z]+", message = "lastName must contain only letters")
     @Column(nullable = false)
     String lastName;
     @NotNull(message = "email cannot be null")

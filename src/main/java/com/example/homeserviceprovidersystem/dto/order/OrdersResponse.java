@@ -4,10 +4,7 @@ import com.example.homeserviceprovidersystem.base.BaseEntity;
 import com.example.homeserviceprovidersystem.dto.address.AddressResponse;
 import com.example.homeserviceprovidersystem.entity.enums.OrderStatus;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -26,6 +23,7 @@ public class OrdersResponse extends BaseEntity<Long> {
     @Positive(message = "value proposedPrice must be positive")
     double ProposedPrice;
     @NotBlank(message = "please write a suitable description for the job")
+    @Pattern(regexp = "[a-zA-Z]+", message = "jobDescription must contain only letters")
     String jobDescription;
     @FutureOrPresent(message = "Date must be in the present or future")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -39,5 +37,6 @@ public class OrdersResponse extends BaseEntity<Long> {
     AddressResponse address;
     OrderStatus orderStatus;
     @NotBlank(message = "please enter an appropriate nameSubDuty")
+    @Pattern(regexp = "[a-zA-Z]+", message = "subDutyName must contain only letters")
     String subDutyName;
 }

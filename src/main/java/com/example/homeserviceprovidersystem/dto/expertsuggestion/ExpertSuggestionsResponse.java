@@ -1,10 +1,7 @@
 package com.example.homeserviceprovidersystem.dto.expertsuggestion;
 
 import com.example.homeserviceprovidersystem.base.BaseEntity;
-import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -42,5 +39,6 @@ public class ExpertSuggestionsResponse extends BaseEntity<Long> {
     @Positive(message = "value proposedPrice must be positive")
     Integer durationOfWorkPerHour;
     @NotBlank(message = "please enter an appropriate nameSubDuty")
+    @Pattern(regexp = "[a-zA-Z]+", message = "nameSubDuty must contain only letters")
     String nameSubDuty;
 }

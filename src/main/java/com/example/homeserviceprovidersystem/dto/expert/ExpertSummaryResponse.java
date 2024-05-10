@@ -7,6 +7,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -24,6 +25,7 @@ public class ExpertSummaryResponse extends PersonSummaryResponse {
     @NotNull(message = "picture must not be null")
     @NotEmpty(message = "picture must not be empty")
     String pictureData;
+    @Pattern(regexp = "[-+]?[0-9]+", message = "score must contain any int, positive or negative")
     int score;
     Set<SubDuty> subDuties;
 }

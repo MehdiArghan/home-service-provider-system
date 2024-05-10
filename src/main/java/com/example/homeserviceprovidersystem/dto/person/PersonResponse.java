@@ -20,9 +20,11 @@ public class PersonResponse extends BaseEntity<Long> {
     @NotNull(message = "firstName cannot be null")
     @NotEmpty(message = "firstName cannot be empty")
     @Column(nullable = false)
+    @Pattern(regexp = "[a-zA-Z]+", message = "firstName must contain only letters")
     String firstName;
     @NotNull(message = "lastName cannot be null")
     @NotEmpty(message = "lastName cannot be empty")
+    @Pattern(regexp = "[a-zA-Z]+", message = "lastName must contain only letters")
     @Column(nullable = false)
     String lastName;
     @NotNull(message = "email cannot be null")
