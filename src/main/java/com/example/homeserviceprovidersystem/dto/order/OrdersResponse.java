@@ -19,24 +19,11 @@ import java.time.LocalTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @ToString
 public class OrdersResponse extends BaseEntity<Long> {
-    @NotNull(message = "value is null")
-    @Positive(message = "value proposedPrice must be positive")
     double ProposedPrice;
-    @NotBlank(message = "please write a suitable description for the job")
-    @Pattern(regexp = "[a-zA-Z]+", message = "jobDescription must contain only letters")
     String jobDescription;
-    @FutureOrPresent(message = "Date must be in the present or future")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotNull(message = "Please enter the appropriate date")
     LocalDate dateOfWork;
-    @FutureOrPresent(message = "time must be in the present or future")
-    @DateTimeFormat(pattern = "HH:mm:ss")
-    @NotNull(message = "Please enter an appropriate time")
     LocalTime TimeOfWord;
-    @Valid
     AddressResponse address;
     OrderStatus orderStatus;
-    @NotBlank(message = "please enter an appropriate nameSubDuty")
-    @Pattern(regexp = "[a-zA-Z]+", message = "subDutyName must contain only letters")
     String subDutyName;
 }
